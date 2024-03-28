@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PeopleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -22,3 +23,6 @@ Route::middleware([
         return Inertia::render('Home');
     })->name('home');
 });
+
+//Pessoas
+Route::get('/people', [PeopleController::class, 'index']);

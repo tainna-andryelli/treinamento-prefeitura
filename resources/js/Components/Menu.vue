@@ -6,6 +6,11 @@ export default {
             isDrawerOpen: false,
         };
     },
+    methods: {
+        redireciona(rota) {
+            window.location.href = rota;
+        },
+    },
     watch: {
         group() {
             this.isDrawerOpen = false;
@@ -18,20 +23,28 @@ export default {
     <v-navigation-drawer v-model="isDrawerOpen" permanent>
         <v-list>
             <v-list-subheader class="text-h5">Atende Cidadão</v-list-subheader>
-            <v-list-item prepend-icon="mdi-home" title="Home"></v-list-item>
             <v-list-item
+                @click="redireciona('/')"
+                prepend-icon="mdi-home"
+                title="Home"
+            ></v-list-item>
+            <v-list-item
+                @click="redireciona('/people')"
                 prepend-icon="mdi-folder-account-outline"
                 title="Pessoas"
             ></v-list-item>
             <v-list-item
+                @click="redireciona('/protocols')"
                 prepend-icon="mdi-school"
                 title="Protocolos"
             ></v-list-item>
             <v-list-item
+                @click="redireciona('/users')"
                 prepend-icon="mdi-account-group-outline"
                 title="Usuários"
             ></v-list-item>
             <v-list-item
+                @click="redireciona('/settings')"
                 prepend-icon="mdi-cog-outline"
                 title="Configurações"
             ></v-list-item>
