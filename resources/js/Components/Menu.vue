@@ -20,7 +20,7 @@ export default {
 </script>
 
 <template>
-    <v-navigation-drawer v-model="isDrawerOpen" permanent>
+    <v-navigation-drawer v-model="isDrawerOpen">
         <v-list>
             <v-list-subheader class="text-h5">Atende Cidadão</v-list-subheader>
             <v-list-item
