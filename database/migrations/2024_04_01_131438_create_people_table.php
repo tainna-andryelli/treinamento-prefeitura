@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('people', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('name', 255)->nullable(false);
-            $table->date('date_birth')->nullable(false);
-            $table->string('cpf', 11)->unique()->nullable(false);
-            $table->enum('sex', ['M', 'F', 'Outro'])->nullable(false);
+            $table->id();
+            $table->string('name', 255);
+            $table->date('birthday');
+            $table->string('cpf')->unique();
+            $table->enum('sex', ['Masculino', 'Feminino', 'Outro']);
             $table->string('city')->nullable();
             $table->string('neighborhood')->nullable();
             $table->string('street')->nullable();

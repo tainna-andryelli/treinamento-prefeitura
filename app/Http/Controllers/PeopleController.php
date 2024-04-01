@@ -4,15 +4,14 @@ namespace App\Http\Controllers;
 
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use App\Models\People;
 
 class PeopleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Inertia::render('People');
+        $people = People::all();
+        return Inertia::render('People', ['people' => $people]);
     }
 
     /**
