@@ -7,8 +7,8 @@ export default {
         };
     },
     methods: {
-        redireciona(rota) {
-            window.location.href = rota;
+        redirect(route) {
+            window.location.href = route;
         },
     },
     watch: {
@@ -24,27 +24,27 @@ export default {
         <v-list>
             <v-list-subheader class="text-h5">Atende Cidadão</v-list-subheader>
             <v-list-item
-                @click="redireciona('/')"
+                @click="redirect('/')"
                 prepend-icon="mdi-home"
                 title="Home"
             ></v-list-item>
             <v-list-item
-                @click="redireciona('/people')"
+                @click="redirect('/people')"
                 prepend-icon="mdi-folder-account-outline"
                 title="Pessoas"
             ></v-list-item>
             <v-list-item
-                @click="redireciona('/protocols')"
+                @click="redirect('/protocols')"
                 prepend-icon="mdi-school"
                 title="Protocolos"
             ></v-list-item>
             <v-list-item
-                @click="redireciona('/users')"
+                @click="redirect('/users')"
                 prepend-icon="mdi-account-group-outline"
                 title="Usuários"
             ></v-list-item>
             <v-list-item
-                @click="redireciona('/settings')"
+                @click="redirect('/settings')"
                 prepend-icon="mdi-cog-outline"
                 title="Configurações"
             ></v-list-item>

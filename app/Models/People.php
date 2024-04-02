@@ -10,7 +10,7 @@ class People extends Model
     protected $table = 'people';
     protected $fillable = [
         'name',
-        'date_birth',
+        'birthday',
         'cpf',
         'sex',
         'city',

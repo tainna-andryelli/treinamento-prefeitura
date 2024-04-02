@@ -27,7 +27,14 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'name' => 'required|string',
+            'birthday' => 'required|date',
+            'cpf' => 'required|string|unique:people',
+            'sex' => 'required|string',
+        ]);
+
+        People::create($validatedData);
     }
 
     /**

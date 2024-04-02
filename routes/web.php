@@ -26,3 +26,4 @@ Route::middleware([
 
 //Pessoas
 Route::get('/people', [PeopleController::class, 'index']);
+Route::post('/people', [PeopleController::class, 'store']);
