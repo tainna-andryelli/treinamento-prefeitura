@@ -10,7 +10,7 @@ class PeopleController extends Controller
 {
     public function index()
     {
-        $people = People::all();
+        $people = People::paginate(10);
         return Inertia::render('People', ['people' => $people]);
     }
 

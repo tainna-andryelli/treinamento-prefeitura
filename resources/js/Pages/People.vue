@@ -1,5 +1,6 @@
 <script>
 import Menu from "../Components/Menu.vue";
+import Pagination from "../Components/Pagination.vue";
 import PeopleForm from "../Components/PeopleForm.vue";
 
 export default {
@@ -7,14 +8,30 @@ export default {
     data() {
         return {
             isDialogOpen: false,
+            perPage: 10, //numero de itens por page
+            page: 1, //page atual
+            headers: [
+                { title: "#", align: "left", value: "id" },
+                { title: "Nome", value: "name" },
+                { title: "CPF", value: "cpf" },
+                { title: "Data de Nascimento", value: "birthday" },
+                { title: "Sexo", value: "sex" },
+                { title: "Ações", value: "o", sortable: false },
+            ],
         };
     },
     components: {
         Menu,
         PeopleForm,
+        Pagination,
     },
     props: {
-        people: Array,
+        people: Object,
+    },
+    computed: {
+        totalPages() {
+            return this.people.last_page;
+        },
     },
     methods: {
         formatDate(date) {
@@ -29,6 +46,12 @@ export default {
         },
         closeDialog() {
             this.isDialogOpen = false;
+        },
+        editItem(item) {
+            console.log("Veja o item: ", item);
+        },
+        deleteItem(item) {
+            console.log("Deleta o item: ", item);
         },
     },
 };
@@ -58,61 +81,55 @@ export default {
                             </v-dialog>
                         </v-card-title>
                     </div>
-                    <v-table>
-                        <thead class="bg-grey-lighten-3">
+                    <v-data-table
+                        :headers="headers"
+                        :items="people.data"
+                        :items-per-page="perPage"
+                        :page="page"
+                    >
+                        <template v-slot:item="{ item }">
                             <tr>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    #
-                                </th>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    Nome
-                                </th>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    CPF
-                                </th>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    Data de Nascimento
-                                </th>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    Sexo
-                                </th>
-                                <th class="font-weight-bold text-subtitle-2">
-                                    Ações
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="person in people" :key="person.id">
-                                <td>{{ person.id }}</td>
-                                <td>{{ person.name }}</td>
-                                <td>{{ person.cpf }}</td>
-                                <td>{{ formatDate(person.birthday) }}</td>
-                                <td>{{ person.sex }}</td>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.name }}</td>
+                                <td>{{ item.cpf }}</td>
+                                <td>{{ formatDate(item.birthday) }}</td>
+                                <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
                                     <v-btn
+                                        @click="editItem(item)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-pencil"
                                         size="small"
                                         class="text-light-blue-darken-2"
                                         variant="tonal"
-                                        >VISUALIZAR</v-btn
                                     >
+                                        VISUALIZAR
+                                    </v-btn>
                                     <v-btn
+                                        @click="deleteItem(item)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-pencil"
                                         size="small"
                                         class="text-light-blue-darken-2"
                                         variant="tonal"
-                                        >EXCLUIR</v-btn
                                     >
+                                        EXCLUIR
+                                    </v-btn>
                                 </td>
                             </tr>
-                        </tbody>
-                    </v-table>
+                        </template>
+                    </v-data-table>
+                    <Pagination :page="page" :totalPages="totalPages" />
                 </v-card>
             </v-container>
         </v-main>
     </v-app>
 </template>
+
+<style>
+.v-data-table-footer {
+    display: none;
+}
+</style>
