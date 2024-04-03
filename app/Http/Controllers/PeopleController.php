@@ -32,6 +32,11 @@ class PeopleController extends Controller
             'birthday' => 'required|date',
             'cpf' => 'required|string|unique:people',
             'sex' => 'required|string',
+            'city' => 'nullable|string',
+            'neighborhood' => 'nullable|string',
+            'street' => 'nullable|string',
+            'number' => 'nullable|string',
+            'complement' => 'nullable|string'
         ]);
 
         People::create($validatedData);

@@ -16,7 +16,7 @@ export default {
                 { title: "CPF", value: "cpf" },
                 { title: "Data de Nascimento", value: "birthday" },
                 { title: "Sexo", value: "sex" },
-                { title: "Ações", value: "o", sortable: false },
+                { title: "Ações", sortable: false },
             ],
         };
     },

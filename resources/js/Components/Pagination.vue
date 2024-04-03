@@ -3,7 +3,7 @@
         <v-pagination
             v-bind="page"
             :length="totalPages"
-            color="primary"
+            color="blue"
             next-icon="mdi-menu-right"
             prev-icon="mdi-menu-left"
         ></v-pagination>
