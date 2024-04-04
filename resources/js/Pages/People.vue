@@ -8,6 +8,8 @@ export default {
     data() {
         return {
             isDialogOpen: false,
+            isEditing: false,
+            person: null,
             perPage: 10, //numero de itens por page
             page: 1, //page atual
             headers: [
@@ -44,11 +46,13 @@ export default {
         redirect(route) {
             window.location.href = route;
         },
+        openDialog(mode, item = null) {
+            this.isDialogOpen = true;
+            this.isEditing = mode === "edit";
+            this.person = item;
+        },
         closeDialog() {
             this.isDialogOpen = false;
-        },
-        editItem(item) {
-            console.log("Veja o item: ", item);
         },
         deleteItem(item) {
             console.log("Deleta o item: ", item);
@@ -73,11 +77,15 @@ export default {
                                 rounded="xs"
                                 color="blue"
                                 variant="tonal"
-                                @click="isDialogOpen = true"
+                                @click="openDialog()"
                                 >CADASTRAR</v-btn
                             >
                             <v-dialog v-model="isDialogOpen" width="1000px">
-                                <PeopleForm @closeDialog="closeDialog" />
+                                <PeopleForm
+                                    @closeDialog="closeDialog"
+                                    :isEditing="isEditing"
+                                    :item="{}"
+                                />
                             </v-dialog>
                         </v-card-title>
                     </div>
@@ -96,7 +104,7 @@ export default {
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
                                     <v-btn
-                                        @click="editItem(item)"
+                                        @click="openDialog('edit', item)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-pencil"
@@ -106,6 +114,16 @@ export default {
                                     >
                                         VISUALIZAR
                                     </v-btn>
+                                    <v-dialog
+                                        v-model="isDialogOpen"
+                                        width="1000px"
+                                    >
+                                        <PeopleForm
+                                            @closeDialog="closeDialog"
+                                            :item="person"
+                                            :isEditing="isEditing"
+                                        />
+                                    </v-dialog>
                                     <v-btn
                                         @click="deleteItem(item)"
                                         rounded="xs"
@@ -131,5 +149,15 @@ export default {
 <style>
 .v-data-table-footer {
     display: none;
+}
+.v-overlay__scrim {
+    background-color: transparent;
+    backdrop-filter: blur(0.6px);
+}
+
+.v-dialog > .v-overlay__content > .v-card {
+    box-shadow: none;
+    overflow-y: hidden;
+    border: solid 0.5px grey;
 }
 </style>

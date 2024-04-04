@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\People;
+use Carbon\Carbon;
 
 class PeopleController extends Controller
 {
@@ -27,19 +28,19 @@ class PeopleController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string',
-            'birthday' => 'required|date',
-            'cpf' => 'required|string|unique:people',
-            'sex' => 'required|string',
-            'city' => 'nullable|string',
-            'neighborhood' => 'nullable|string',
-            'street' => 'nullable|string',
-            'number' => 'nullable|string',
-            'complement' => 'nullable|string'
-        ]);
+        $data = [
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'cpf' => $request->cpf,
+            'sex' => $request->sex,
+            'city' => $request->city,
+            'neighborhood' => $request->neighborhood,
+            'street' => $request->street,
+            'number' => $request->number,
+            'complement' => $request->complement,
+        ];
 
-        People::create($validatedData);
+        People::create($data);
     }
 
     /**
@@ -63,7 +64,20 @@ class PeopleController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $person = People::find($id);
+        $data = [
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'cpf' => $request->cpf,
+            'sex' => $request->sex,
+            'city' => $request->city,
+            'neighborhood' => $request->neighborhood,
+            'street' => $request->street,
+            'number' => $request->number,
+            'complement' => $request->complement,
+        ];
+
+        $person->update($data);
     }
 
     /**
