@@ -43,8 +43,12 @@ export default {
             const day = date.slice(8, 10);
             return day + "/" + mounth + "/" + year;
         },
-        redirect(route) {
-            window.location.href = route;
+        formatCpf(cpf) {
+            const part1 = cpf.slice(0, 3);
+            const part2 = cpf.slice(3, 6);
+            const part3 = cpf.slice(6, 9);
+            const part4 = cpf.slice(9, 11);
+            return part1 + "." + part2 + "." + part3 + "-" + part4;
         },
         openDialog(mode, item = null) {
             this.isDialogOpen = true;
@@ -99,7 +103,7 @@ export default {
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ item.cpf }}</td>
+                                <td>{{ formatCpf(item.cpf) }}</td>
                                 <td>{{ formatDate(item.birthday) }}</td>
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
