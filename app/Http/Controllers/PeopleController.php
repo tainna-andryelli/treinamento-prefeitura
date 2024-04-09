@@ -70,6 +70,6 @@ class PeopleController extends Controller
 
     public function destroy(string $id)
     {
-        //
+        People::destroy($id);
     }
 }

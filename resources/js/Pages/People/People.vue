@@ -1,14 +1,13 @@
 <script>
 import Menu from "../../Components/Menu.vue";
 import Pagination from "../../Components/Pagination.vue";
-import PeopleForm from "../../Components/PeopleForm.vue";
+import { useToast } from "vue-toast-notification";
 
 export default {
     name: "People",
     data() {
         return {
             isDialogOpen: false,
-            isEditing: false,
             person: null,
             perPage: 10, //numero de itens por page
             page: 1, //page atual
@@ -20,11 +19,11 @@ export default {
                 { title: "Sexo", value: "sex" },
                 { title: "Ações", sortable: false },
             ],
+            toast: useToast(),
         };
     },
     components: {
         Menu,
-        PeopleForm,
         Pagination,
     },
     props: {
@@ -50,16 +49,23 @@ export default {
             const part4 = cpf.slice(9, 11);
             return part1 + "." + part2 + "." + part3 + "-" + part4;
         },
-        openDialog(mode, item = null) {
+        openDelete(item) {
             this.isDialogOpen = true;
-            this.isEditing = mode === "edit";
             this.person = item;
         },
-        closeDialog() {
-            this.isDialogOpen = false;
-        },
-        deleteItem(item) {
-            console.log("Deleta o item: ", item);
+        async deleteItem() {
+            try {
+                await this.$inertia.delete(`/people/${this.person.id}`);
+                this.toast.success("Pessoa deletada com sucesso!", {
+                    position: "top-right",
+                });
+                this.isDialogOpen = false;
+                onSucess: () => {};
+            } catch (error) {
+                this.toast.error("Erro ao deletar pessoa!", {
+                    position: "top-right",
+                });
+            }
         },
     },
 };
@@ -84,13 +90,6 @@ export default {
                                 :href="route('people.create')"
                                 >CADASTRAR</v-btn
                             >
-                            <v-dialog v-model="isDialogOpen" width="1000px">
-                                <PeopleForm
-                                    @closeDialog="closeDialog"
-                                    :isEditing="isEditing"
-                                    :item="{}"
-                                />
-                            </v-dialog>
                         </v-card-title>
                     </div>
                     <v-data-table
@@ -119,7 +118,7 @@ export default {
                                         VISUALIZAR
                                     </v-btn>
                                     <v-btn
-                                        @click="deleteItem(item)"
+                                        @click="openDelete(item)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-delete"
@@ -137,6 +136,35 @@ export default {
                 </v-card>
             </v-container>
         </v-main>
+
+        <v-dialog v-model="isDialogOpen" width="500px">
+            <v-card class="d-flex ga-4 pa-8 bg-red-lighten-1">
+                <v-card-title class="text-h4">Deletar Pessoa</v-card-title>
+                <v-card-text class="pa-4"
+                    >Tem certeza que deseja deletar
+                    <strong>{{ person.name }}</strong
+                    >?</v-card-text
+                >
+                <v-card-actions class="ga-6">
+                    <v-btn
+                        :href="route('people.index')"
+                        rounded="xs"
+                        color="white"
+                        size="large"
+                        variant="tonal"
+                        >Cancelar</v-btn
+                    >
+                    <v-btn
+                        rounded="xs"
+                        color="black"
+                        size="large"
+                        variant="tonal"
+                        @click="deleteItem"
+                        >Confirmar</v-btn
+                    >
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
     </v-app>
 </template>
 
@@ -146,7 +174,7 @@ export default {
 }
 .v-overlay__scrim {
     background-color: transparent;
-    backdrop-filter: blur(0.6px);
+    backdrop-filter: blur(2px);
 }
 
 .v-dialog > .v-overlay__content > .v-card {
