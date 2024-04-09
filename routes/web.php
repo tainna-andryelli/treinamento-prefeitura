@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PeopleController;
 use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -25,6 +26,8 @@ Route::middleware([
 });
 
 //Pessoas
-Route::get('/people', [PeopleController::class, 'index']);
-Route::post('/people', [PeopleController::class, 'store']);
-Route::put('/people/{id}', [PeopleController::class, 'update']);
+Route::get('/people', [PeopleController::class, 'index'])->name('people.index');
+Route::get('/people/create', [PeopleController::class, 'create'])->name('people.create');
+Route::post('/people', [PeopleController::class, 'store'])->name('people.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/people/{id}', [PeopleController::class, 'show'])->name('people.show');
+Route::put('/people/{id}', [PeopleController::class, 'update'])->name('people.update')->middleware([HandlePrecognitiveRequests::class]);

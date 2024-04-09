@@ -1,7 +1,7 @@
 <script>
-import Menu from "../Components/Menu.vue";
-import Pagination from "../Components/Pagination.vue";
-import PeopleForm from "../Components/PeopleForm.vue";
+import Menu from "../../Components/Menu.vue";
+import Pagination from "../../Components/Pagination.vue";
+import PeopleForm from "../../Components/PeopleForm.vue";
 
 export default {
     name: "People",
@@ -71,9 +71,9 @@ export default {
         <v-main class="bg-grey-lighten-4">
             <v-container>
                 <span>Atende Cidadão > Pessoas</span>
-                <v-card class="mt-8">
+                <v-card class="mt-8 pa-8">
                     <div class="d-flex align-center justify-space-between">
-                        <v-card-title class="text-h5 my-4"
+                        <v-card-title class="text-h5 my-8"
                             >Pessoas</v-card-title
                         >
                         <v-card-title>
@@ -81,7 +81,7 @@ export default {
                                 rounded="xs"
                                 color="blue"
                                 variant="tonal"
-                                @click="openDialog()"
+                                :href="route('people.create')"
                                 >CADASTRAR</v-btn
                             >
                             <v-dialog v-model="isDialogOpen" width="1000px">
@@ -108,7 +108,7 @@ export default {
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
                                     <v-btn
-                                        @click="openDialog('edit', item)"
+                                        :href="route('people.show', item.id)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-pencil"
@@ -118,21 +118,11 @@ export default {
                                     >
                                         VISUALIZAR
                                     </v-btn>
-                                    <v-dialog
-                                        v-model="isDialogOpen"
-                                        width="1000px"
-                                    >
-                                        <PeopleForm
-                                            @closeDialog="closeDialog"
-                                            :item="person"
-                                            :isEditing="isEditing"
-                                        />
-                                    </v-dialog>
                                     <v-btn
                                         @click="deleteItem(item)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
-                                        prepend-icon="mdi-pencil"
+                                        prepend-icon="mdi-delete"
                                         size="small"
                                         class="text-light-blue-darken-2"
                                         variant="tonal"

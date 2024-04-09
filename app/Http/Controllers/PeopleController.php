@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PeopleRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\People;
@@ -12,21 +13,15 @@ class PeopleController extends Controller
     public function index()
     {
         $people = People::paginate(10);
-        return Inertia::render('People', ['people' => $people]);
+        return Inertia::render('People/People', ['people' => $people]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return Inertia::render('People/RegisterPeople');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(PeopleRequest $request)
     {
         $data = [
             'name' => $request->name,
@@ -43,26 +38,19 @@ class PeopleController extends Controller
         People::create($data);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(string $id)
     {
-        //
+        $person = People::find($id);
+        return Inertia::render('People/EditPeople', ['person' => $person]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(PeopleRequest $request, string $id)
     {
         $person = People::find($id);
         $data = [
@@ -80,9 +68,6 @@ class PeopleController extends Controller
         $person->update($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
