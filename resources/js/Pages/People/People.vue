@@ -1,73 +1,61 @@
-<script>
+<script setup>
 import Menu from "../../Components/Menu.vue";
-import Pagination from "../../Components/Pagination.vue";
+import { defineProps, ref } from "vue";
 import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
+import { useForm } from "laravel-precognition-vue-inertia";
 
-export default {
-    name: "People",
-    data() {
-        return {
-            isDialogOpen: false,
-            person: null,
-            perPage: 10, //numero de itens por page
-            page: 1, //page atual
-            headers: [
-                { title: "#", align: "left", value: "id" },
-                { title: "Nome", value: "name" },
-                { title: "CPF", value: "cpf" },
-                { title: "Data de Nascimento", value: "birthday" },
-                { title: "Sexo", value: "sex" },
-                { title: "Ações", sortable: false },
-            ],
-            toast: useToast(),
-        };
-    },
-    components: {
-        Menu,
-        Pagination,
-    },
-    props: {
-        people: Object,
-    },
-    computed: {
-        totalPages() {
-            return this.people.last_page;
+const props = defineProps({
+    people: Object,
+});
+const toast = useToast();
+const deleteForm = ref();
+
+const isDialogOpen = ref(false);
+const person = ref(null);
+const perPage = ref(10);
+const page = ref(1);
+
+const headers = [
+    { title: "#", align: "left", value: "id" },
+    { title: "Nome", value: "name" },
+    { title: "CPF", value: "cpf" },
+    { title: "Data de Nascimento", value: "birthday" },
+    { title: "Sexo", value: "sex" },
+    { title: "Ações", sortable: false },
+];
+
+const formatDate = (date) => {
+    //date: yyyy-MM-dd
+    const year = date.slice(0, 4);
+    const mounth = date.slice(5, 7);
+    const day = date.slice(8, 10);
+    return day + "/" + mounth + "/" + year;
+};
+
+const openDelete = (item) => {
+    isDialogOpen.value = true;
+    person.value = item;
+    deleteForm.value = useForm("delete", `/people/${item.id}`, {
+        id: item.id,
+    });
+};
+
+const deleteItem = () => {
+    deleteForm.value.submit({
+        preserveScroll: true,
+        onSuccess: () => {
+            toast.success("Pessoa excluída com sucesso!", {
+                position: "top-right",
+            });
+            isDialogOpen.value = false;
         },
-    },
-    methods: {
-        formatDate(date) {
-            //date: yyyy-MM-dd
-            const year = date.slice(0, 4);
-            const mounth = date.slice(5, 7);
-            const day = date.slice(8, 10);
-            return day + "/" + mounth + "/" + year;
+        onError: () => {
+            toast.error("Erro ao excluir pessoa!", {
+                position: "top-right",
+            });
         },
-        formatCpf(cpf) {
-            const part1 = cpf.slice(0, 3);
-            const part2 = cpf.slice(3, 6);
-            const part3 = cpf.slice(6, 9);
-            const part4 = cpf.slice(9, 11);
-            return part1 + "." + part2 + "." + part3 + "-" + part4;
-        },
-        openDelete(item) {
-            this.isDialogOpen = true;
-            this.person = item;
-        },
-        async deleteItem() {
-            try {
-                await this.$inertia.delete(`/people/${this.person.id}`);
-                this.toast.success("Pessoa deletada com sucesso!", {
-                    position: "top-right",
-                });
-                this.isDialogOpen = false;
-                onSucess: () => {};
-            } catch (error) {
-                this.toast.error("Erro ao deletar pessoa!", {
-                    position: "top-right",
-                });
-            }
-        },
-    },
+    });
 };
 </script>
 
@@ -102,7 +90,7 @@ export default {
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ formatCpf(item.cpf) }}</td>
+                                <td>{{ item.cpf }}</td>
                                 <td>{{ formatDate(item.birthday) }}</td>
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
@@ -132,7 +120,7 @@ export default {
                             </tr>
                         </template>
                     </v-data-table>
-                    <Pagination :page="page" :totalPages="totalPages" />
+                    <!-- pagination here -->
                 </v-card>
             </v-container>
         </v-main>
@@ -167,19 +155,3 @@ export default {
         </v-dialog>
     </v-app>
 </template>
-
-<style>
-.v-data-table-footer {
-    display: none;
-}
-.v-overlay__scrim {
-    background-color: transparent;
-    backdrop-filter: blur(2px);
-}
-
-.v-dialog > .v-overlay__content > .v-card {
-    box-shadow: none;
-    overflow-y: hidden;
-    border: solid 0.5px grey;
-}
-</style>
