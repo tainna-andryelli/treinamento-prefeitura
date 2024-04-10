@@ -92,6 +92,7 @@ const submit = () =>
                                         label="CPF:*"
                                         variant="outlined"
                                         @change="form.validate('cpf')"
+                                        v-mask="'###.###.###-##'"
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('cpf')"

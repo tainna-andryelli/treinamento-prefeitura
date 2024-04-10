@@ -4,6 +4,7 @@ import { defineProps, ref } from "vue";
 import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import { useForm } from "laravel-precognition-vue-inertia";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     people: Object,
@@ -31,6 +32,14 @@ const formatDate = (date) => {
     const mounth = date.slice(5, 7);
     const day = date.slice(8, 10);
     return day + "/" + mounth + "/" + year;
+};
+
+const formatCpf = (cpf) => {
+    const part1 = cpf.slice(0, 3);
+    const part2 = cpf.slice(3, 6);
+    const part3 = cpf.slice(6, 9);
+    const part4 = cpf.slice(9, 11);
+    return part1 + "." + part2 + "." + part3 + "-" + part4;
 };
 
 const openDelete = (item) => {
@@ -71,18 +80,18 @@ const deleteItem = () => {
                             >Pessoas</v-card-title
                         >
                         <v-card-title>
-                            <v-btn
+                            <Link
                                 rounded="xs"
                                 color="blue"
                                 variant="tonal"
                                 :href="route('people.create')"
-                                >CADASTRAR</v-btn
+                                >CADASTRAR</Link
                             >
                         </v-card-title>
                     </div>
                     <v-data-table
                         :headers="headers"
-                        :items="people.data"
+                        :items="people"
                         :items-per-page="perPage"
                         :page="page"
                     >
@@ -90,7 +99,7 @@ const deleteItem = () => {
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.name }}</td>
-                                <td>{{ item.cpf }}</td>
+                                <td>{{ formatCpf(item.cpf) }}</td>
                                 <td>{{ formatDate(item.birthday) }}</td>
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
@@ -120,7 +129,6 @@ const deleteItem = () => {
                             </tr>
                         </template>
                     </v-data-table>
-                    <!-- pagination here -->
                 </v-card>
             </v-container>
         </v-main>

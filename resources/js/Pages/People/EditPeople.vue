@@ -5,6 +5,7 @@ import "vue-toast-notification/dist/theme-sugar.css";
 import { defineComponent } from "vue";
 import { defineProps } from "vue";
 import Menu from "../../Components/Menu.vue";
+import { Link } from "@inertiajs/vue3";
 
 const components = defineComponent({
     components: {
@@ -95,6 +96,7 @@ const submit = () =>
                                         v-model="form.cpf"
                                         label="CPF:*"
                                         variant="outlined"
+                                        v-mask="'###.###.###-##'"
                                         disabled
                                     ></v-text-field>
                                 </v-col>

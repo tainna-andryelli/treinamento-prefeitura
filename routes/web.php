@@ -25,7 +25,7 @@ Route::middleware([
     })->name('home');
 });
 
-//People
+//People ---- alterar url's para português
 Route::get('/people', [PeopleController::class, 'index'])->name('people.index');
 Route::get('/people/create', [PeopleController::class, 'create'])->name('people.create');
 Route::post('/people', [PeopleController::class, 'store'])->name('people.store')->middleware([HandlePrecognitiveRequests::class]);

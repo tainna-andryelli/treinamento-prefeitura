@@ -12,7 +12,7 @@ class PeopleController extends Controller
 {
     public function index()
     {
-        $people = People::paginate(10);
+        $people = People::all();
         return Inertia::render('People/People', ['people' => $people]);
     }
 
