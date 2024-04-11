@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Protocols;
+use App\Models\People;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,9 @@ class ProtocolsController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Protocols/Protocols');
+        $protocols = Protocols::all();
+        $people = People::all();
+        return Inertia::render('Protocols/Protocols', ['protocols' => $protocols, 'people' => $people]);
     }
 
     public function create()
