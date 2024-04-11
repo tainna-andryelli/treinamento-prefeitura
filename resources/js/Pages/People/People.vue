@@ -86,13 +86,12 @@ const pageCount = computed(() => {
                         <v-card-title class="text-h5 my-8 pa-0"
                             >Pessoas</v-card-title
                         >
-                        <v-card-title class="pa-0">
+
+                        <v-card-title class="pa-2">
                             <Link
-                                rounded="xs"
                                 color="blue"
-                                variant="tonal"
                                 :href="route('people.create')"
-                                class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4"
+                                class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4 rounded-lg"
                                 >CADASTRAR</Link
                             >
                         </v-card-title>
