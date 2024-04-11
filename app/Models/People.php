@@ -21,4 +21,9 @@ class People extends Model
         'number',
         'complement',
     ];
+
+    public function protocols()
+    {
+        return $this->hasMany(Protocols::class, 'contributor_id');
+    }
 }

@@ -12,7 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('protocols', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('number');
+            $table->string('description', 2000);
+            $table->date('created_date');
+            $table->integer('deadline_days');
+
+            //People references
+            $table->foreignId('contributor_id')->constrained('people')->onDelete('cascade');
+
             $table->timestamps();
         });
     }

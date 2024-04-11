@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Protocols extends Model
 {
     use HasFactory;
+    
+    protected $fillable = [
+        'description',
+        'created_date',
+        'deadline_days',
+        'contributor_id'
+    ];
+
+    public function contributor()
+    {
+        return $this->belongsTo(People::class, 'contributor_id');
+    }
 }
