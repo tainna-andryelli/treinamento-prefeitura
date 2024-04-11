@@ -33,3 +33,6 @@ Route::post('/pessoas', [PeopleController::class, 'store'])->name('people.store'
 Route::get('/pessoas/pessoa-{id}', [PeopleController::class, 'edit'])->name('people.edit');
 Route::put('/pessoas/pessoa-{id}', [PeopleController::class, 'update'])->name('people.update')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('pessoas/pessoa-{id}', [PeopleController::class, 'destroy'])->name('people.destroy')->middleware([HandlePrecognitiveRequests::class]);
+
+//Protocols
+Route::get('/protocolos', [ProtocolsController::class, 'index'])->name('protocols.index');
