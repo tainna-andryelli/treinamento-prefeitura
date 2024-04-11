@@ -45,7 +45,7 @@ const formatCpf = (cpf) => {
 const openDelete = (item) => {
     isDialogOpen.value = true;
     person.value = item;
-    deleteForm.value = useForm("delete", `/people/${item.id}`, {
+    deleteForm.value = useForm("delete", `/pessoas/pessoa-${item.id}`, {
         id: item.id,
     });
 };

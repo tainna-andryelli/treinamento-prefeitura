@@ -29,7 +29,7 @@ export default {
                 title="Home"
             ></v-list-item>
             <v-list-item
-                @click="redirect('/people')"
+                @click="redirect('/pessoas')"
                 prepend-icon="mdi-folder-account-outline"
                 title="Pessoas"
             ></v-list-item>

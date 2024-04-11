@@ -18,7 +18,7 @@ export default {
                 <p>
                     Você visualiza as <strong>Pessoas</strong> cadastradas no
                     sistema clicando
-                    <a class="text-blue" href="/people">aqui</a>.
+                    <a class="text-blue" href="/pessoas">aqui</a>.
                 </p>
                 <p>
                     Você visualiza os <strong>Protocolos</strong> clicando

@@ -25,10 +25,10 @@ Route::middleware([
     })->name('home');
 });
 
-//People ---- alterar url's para português
-Route::get('/people', [PeopleController::class, 'index'])->name('people.index');
-Route::get('/people/create', [PeopleController::class, 'create'])->name('people.create');
-Route::post('/people', [PeopleController::class, 'store'])->name('people.store')->middleware([HandlePrecognitiveRequests::class]);
-Route::get('/people/{id}', [PeopleController::class, 'show'])->name('people.show');
-Route::put('/people/{id}', [PeopleController::class, 'update'])->name('people.update')->middleware([HandlePrecognitiveRequests::class]);
-Route::delete('people/{id}', [PeopleController::class, 'destroy'])->name('people.destroy')->middleware([HandlePrecognitiveRequests::class]);
+//People
+Route::get('/pessoas', [PeopleController::class, 'index'])->name('people.index');
+Route::get('/pessoas/cadastro', [PeopleController::class, 'create'])->name('people.create');
+Route::post('/pessoas', [PeopleController::class, 'store'])->name('people.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/pessoas/pessoa-{id}', [PeopleController::class, 'show'])->name('people.show');
+Route::put('/pessoas/pessoa-{id}', [PeopleController::class, 'update'])->name('people.update')->middleware([HandlePrecognitiveRequests::class]);
+Route::delete('pessoas/pessoa-{id}', [PeopleController::class, 'destroy'])->name('people.destroy')->middleware([HandlePrecognitiveRequests::class]);
