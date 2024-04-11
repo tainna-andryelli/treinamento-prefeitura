@@ -34,7 +34,7 @@ export default {
                 title="Pessoas"
             ></v-list-item>
             <v-list-item
-                @click="redirect('/protocols')"
+                @click="redirect('/protocolos')"
                 prepend-icon="mdi-school"
                 title="Protocolos"
             ></v-list-item>

@@ -2,16 +2,8 @@
 import { useForm } from "laravel-precognition-vue-inertia";
 import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
-import { defineComponent } from "vue";
 import { defineProps } from "vue";
 import Menu from "../../Components/Menu.vue";
-import { Link } from "@inertiajs/vue3";
-
-const components = defineComponent({
-    components: {
-        Menu,
-    },
-});
 
 const props = defineProps({
     person: Object,
@@ -50,7 +42,7 @@ const submit = () =>
 <template>
     <v-app>
         <Menu />
-        <v-main class="bg-grey-lighten-4">
+        <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Pessoas > Visualizar</span>
                 <v-card class="mt-8 pa-4">
