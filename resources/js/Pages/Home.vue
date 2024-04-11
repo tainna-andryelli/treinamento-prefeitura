@@ -1,11 +1,5 @@
-<script>
+<script setup>
 import Menu from "../Components/Menu.vue";
-
-export default {
-    components: {
-        Menu,
-    },
-};
 </script>
 
 <template>

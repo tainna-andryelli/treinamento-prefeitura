@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PeopleRequest;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Models\People;
 
 class PeopleController extends Controller
@@ -37,16 +36,10 @@ class PeopleController extends Controller
         People::create($data);
     }
 
-
-    public function show(string $id)
+    public function edit(string $id)
     {
         $person = People::find($id);
         return Inertia::render('People/EditPeople', ['person' => $person]);
-    }
-
-    public function edit(string $id)
-    {
-        //
     }
 
     public function update(PeopleRequest $request, string $id)
