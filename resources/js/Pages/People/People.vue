@@ -78,7 +78,7 @@ const pageCount = computed(() => {
 <template>
     <v-app>
         <Menu />
-        <v-main class="bg-grey-lighten-4">
+        <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Pessoas</span>
                 <v-card class="mt-8 pa-8">
@@ -122,7 +122,7 @@ const pageCount = computed(() => {
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
                                     <v-btn
-                                        :href="route('people.show', item.id)"
+                                        :href="route('people.edit', item.id)"
                                         rounded="xs"
                                         color="light-blue-lighten-5"
                                         prepend-icon="mdi-pencil"
