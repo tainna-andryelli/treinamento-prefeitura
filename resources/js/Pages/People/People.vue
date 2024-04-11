@@ -1,6 +1,6 @@
 <script setup>
 import Menu from "../../Components/Menu.vue";
-import { defineProps, ref } from "vue";
+import { defineProps, ref, computed } from "vue";
 import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import { useForm } from "laravel-precognition-vue-inertia";
@@ -9,13 +9,13 @@ import { Link } from "@inertiajs/vue3";
 const props = defineProps({
     people: Object,
 });
+
 const toast = useToast();
 const deleteForm = ref();
 
 const isDialogOpen = ref(false);
 const person = ref(null);
-const perPage = ref(10);
-const page = ref(1);
+const search = ref("");
 
 const headers = [
     { title: "#", align: "left", value: "id" },
@@ -66,6 +66,13 @@ const deleteItem = () => {
         },
     });
 };
+
+//pagination
+const itemsPerPage = ref(10);
+const page = ref(1);
+const pageCount = computed(() => {
+    return Math.ceil(props.people.length / itemsPerPage.value);
+});
 </script>
 
 <template>
@@ -76,24 +83,36 @@ const deleteItem = () => {
                 <span>Atende Cidadão > Pessoas</span>
                 <v-card class="mt-8 pa-8">
                     <div class="d-flex align-center justify-space-between">
-                        <v-card-title class="text-h5 my-8"
+                        <v-card-title class="text-h5 my-8 pa-0"
                             >Pessoas</v-card-title
                         >
-                        <v-card-title>
+                        <v-card-title class="pa-0">
                             <Link
                                 rounded="xs"
                                 color="blue"
                                 variant="tonal"
                                 :href="route('people.create')"
+                                class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4"
                                 >CADASTRAR</Link
                             >
                         </v-card-title>
                     </div>
+                    <v-card-title class="pa-0 mb-8">
+                        <v-text-field
+                            v-model="search"
+                            label="Buscar Pessoa"
+                            prepend-inner-icon="mdi-magnify"
+                            single-line
+                            variant="outlined"
+                            hide-details
+                        />
+                    </v-card-title>
                     <v-data-table
+                        v-model:page="page"
                         :headers="headers"
                         :items="people"
-                        :items-per-page="perPage"
-                        :page="page"
+                        :items-per-page="itemsPerPage"
+                        :search="search"
                     >
                         <template v-slot:item="{ item }">
                             <tr>
@@ -129,6 +148,11 @@ const deleteItem = () => {
                             </tr>
                         </template>
                     </v-data-table>
+                    <v-pagination
+                        v-model="page"
+                        :length="pageCount"
+                        class="text-light-blue-darken-2 mt-8"
+                    ></v-pagination>
                 </v-card>
             </v-container>
         </v-main>
@@ -163,3 +187,9 @@ const deleteItem = () => {
         </v-dialog>
     </v-app>
 </template>
+
+<style>
+.v-data-table-footer {
+    display: none;
+}
+</style>

@@ -6,7 +6,6 @@ use App\Http\Requests\PeopleRequest;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Models\People;
-use Carbon\Carbon;
 
 class PeopleController extends Controller
 {
