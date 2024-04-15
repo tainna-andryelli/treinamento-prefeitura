@@ -18,31 +18,44 @@ class ProtocolsController extends Controller
 
     public function create()
     {
-        //
+        $people = People::select('id', 'name')->get();
+        return Inertia::render('Protocols/RegisterProtocols', ['people' => $people]);
     }
 
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'description' => 'required',
+            'created_date' => 'required|date',
+            'deadline_days' => 'required|numeric',
+            'contributor_id' => 'required|exists:people,id',
+        ]);
+
+        Protocols::create($validatedData);
     }
 
-    public function show(Protocols $protocols)
+    public function edit(string $number)
     {
-        //
+        $protocol = Protocols::find($number);
+        $people = People::select('id', 'name')->get();
+        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people]); 
     }
 
-    public function edit(Protocols $protocols)
+    public function update(Request $request, string $number)
     {
-        //
+        $protocol = Protocols::find($number);
+        $validatedData = $request->validate([
+            'description' => 'required',
+            'created_date' => 'required|date',
+            'deadline_days' => 'required|numeric',
+            'contributor_id' => 'required|exists:people,id',
+        ]);
+
+        $protocol->update($validatedData);
     }
 
-    public function update(Request $request, Protocols $protocols)
+    public function destroy(string $number)
     {
-        //
-    }
-
-    public function destroy(Protocols $protocols)
-    {
-        //
+        Protocols::destroy($number);
     }
 }

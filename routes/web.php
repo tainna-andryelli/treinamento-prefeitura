@@ -36,3 +36,8 @@ Route::delete('pessoas/pessoa-{id}', [PeopleController::class, 'destroy'])->name
 
 //Protocols
 Route::get('/protocolos', [ProtocolsController::class, 'index'])->name('protocols.index');
+Route::get('/protocolos/cadastro', [ProtocolsController::class, 'create'])->name('protocols.create');
+Route::post('/protocolos', [ProtocolsController::class, 'store'])->name('protocols.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/protocolos/protocolo-{id}', [ProtocolsController::class, 'edit'])->name('protocols.edit');
+Route::put('/protocolos/protocolo-{id}', [ProtocolsController::class, 'update'])->name('protocols.update')->middleware([HandlePrecognitiveRequests::class]);
+Route::delete('protocolos/protocolo-{id}', [ProtocolsController::class, 'destroy'])->name('protocols.destroy')->middleware([HandlePrecognitiveRequests::class]);

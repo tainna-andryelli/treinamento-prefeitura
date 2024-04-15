@@ -9,6 +9,8 @@ class Protocols extends Model
 {
     use HasFactory;
     
+    protected $primaryKey = 'number';
+
     protected $fillable = [
         'description',
         'created_date',

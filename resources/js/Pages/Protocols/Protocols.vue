@@ -15,7 +15,7 @@ const toast = useToast();
 const deleteForm = ref();
 
 const isDialogOpen = ref(false);
-const person = ref(null);
+const protocol = ref(null);
 const search = ref("");
 
 const headers = [
@@ -34,23 +34,27 @@ const getNameContributor = (personId) => {
 
 const openDelete = (item) => {
     isDialogOpen.value = true;
-    person.value = item;
-    deleteForm.value = useForm("delete", `/pessoas/pessoa-${item.id}`, {
-        id: item.id,
-    });
+    protocol.value = item;
+    deleteForm.value = useForm(
+        "delete",
+        `/protocolos/protocolo-${item.number}`,
+        {
+            number: item.number,
+        }
+    );
 };
 
 const deleteItem = () => {
     deleteForm.value.submit({
         preserveScroll: true,
         onSuccess: () => {
-            toast.success("Pessoa excluída com sucesso!", {
+            toast.success("Protocolo excluído com sucesso!", {
                 position: "top-right",
             });
             isDialogOpen.value = false;
         },
         onError: () => {
-            toast.error("Erro ao excluir pessoa!", {
+            toast.error("Erro ao excluir protocolo!", {
                 position: "top-right",
             });
         },
@@ -79,7 +83,7 @@ const pageCount = computed(() => {
                         <v-card-title class="pa-2">
                             <Link
                                 color="blue"
-                                :href="route('people.create')"
+                                :href="route('protocols.create')"
                                 class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4 rounded-lg"
                                 >CADASTRAR</Link
                             >
@@ -155,7 +159,8 @@ const pageCount = computed(() => {
             <v-card class="d-flex ga-4 pa-8 bg-red-lighten-1">
                 <v-card-title class="text-h4">Deletar Pessoa</v-card-title>
                 <v-card-text class="pa-4"
-                    >Tem certeza que deseja deletar >?</v-card-text
+                    >Tem certeza que deseja deletar o protocolo de número
+                    {{ protocol.number }}?</v-card-text
                 >
                 <v-card-actions class="ga-6">
                     <v-btn
