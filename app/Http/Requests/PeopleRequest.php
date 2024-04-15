@@ -40,7 +40,7 @@ class PeopleRequest extends FormRequest
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.unique' => 'CPF já cadastrado.',
             'sex.required' => 'Selecione o sexo.',
-            'CpfValidateRule' => 'CPF inválido',
+            'CpfValidateRule' => 'CPF inválido.',
         ];
     }
 }

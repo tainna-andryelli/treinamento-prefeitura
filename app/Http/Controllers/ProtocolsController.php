@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ProtocolsRequest;
 use App\Models\Protocols;
 use App\Models\People;
 use Inertia\Inertia;
@@ -22,16 +23,16 @@ class ProtocolsController extends Controller
         return Inertia::render('Protocols/RegisterProtocols', ['people' => $people]);
     }
 
-    public function store(Request $request)
+    public function store(ProtocolsRequest $request)
     {
-        $validatedData = $request->validate([
-            'description' => 'required',
-            'created_date' => 'required|date',
-            'deadline_days' => 'required|numeric',
-            'contributor_id' => 'required|exists:people,id',
-        ]);
+        $data = [
+            'description' => $request->description,
+            'created_date' => $request->created_date,
+            'deadline_days' => $request->deadline_days,
+            'contributor_id' => $request->contributor_id,
+        ];
 
-        Protocols::create($validatedData);
+        Protocols::create($data);
     }
 
     public function edit(string $number)
