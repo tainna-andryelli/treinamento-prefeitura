@@ -39,12 +39,12 @@ export default {
                 title="Protocolos"
             ></v-list-item>
             <v-list-item
-                @click="redirect('/users')"
+                @click="redirect('/usuarios')"
                 prepend-icon="mdi-account-group-outline"
                 title="Usuários"
             ></v-list-item>
             <v-list-item
-                @click="redirect('/settings')"
+                @click="redirect('/configuracoes')"
                 prepend-icon="mdi-cog-outline"
                 title="Configurações"
             ></v-list-item>

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
@@ -10,9 +11,7 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
+        //'canRegister' => Route::has('register'),
     ]);
 });
 
@@ -43,3 +42,8 @@ Route::put('/protocolos/protocolo-{id}', [ProtocolsController::class, 'update'])
 Route::delete('protocolos/protocolo-{id}', [ProtocolsController::class, 'destroy'])->name('protocols.destroy')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('protocolos/arquivo-{id}', [ProtocolsController::class, 'destroyFile'])->name('protocols.destroyFile');
 Route::get('/protocolos/download/arquivo-{id}', [ProtocolsController::class, 'downloadFile'])->name('protocols.downloadFile');
+
+//Users
+Route::get('/usuarios', [UserController::class, 'index'])->name('user.index');
+Route::get('/usuarios/registro', [UserController::class, 'create'])->name('user.create');
+Route::get('/usuarios/usuario-{id}', [UserController::class, 'edit'])->name('user.edit');
