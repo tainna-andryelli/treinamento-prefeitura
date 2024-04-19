@@ -22,4 +22,9 @@ class Protocols extends Model
     {
         return $this->belongsTo(People::class, 'contributor_id');
     }
+
+    public function attachedFiles()
+    {
+        return $this->hasMany(AttachedFile::class,'protocol_number', 'number');
+    }
 }

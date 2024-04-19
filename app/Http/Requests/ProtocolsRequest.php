@@ -7,19 +7,11 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProtocolsRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -27,6 +19,8 @@ class ProtocolsRequest extends FormRequest
             'created_date' => 'required|date',
             'deadline_days' => 'required|numeric|between:5,30',
             'contributor_id' => ['required', 'exists:people,id', new ContributorAgeValidateRule],
+            'files.*' => 'mimes:jpg,jpeg,png,pdf|max:3072',
+            'files' => 'max:5', 
         ];
     }
 
@@ -39,8 +33,10 @@ class ProtocolsRequest extends FormRequest
             'deadline_days.numeric' => 'O prazo deve ser um número.',
             'deadline_days.between' => 'O prazo deve estar entre 5 e 30 dias.',
             'contributor_id.required' => 'O contribuinte é obrigatório.',
-            'contributor_id.exists' => 'O contribuinte selecionado não está cadastrado no sistema.'
-            
+            'contributor_id.exists' => 'O contribuinte selecionado não está cadastrado no sistema.',
+            'files.*.mimes' => 'São permitidos somente arquivos JPG, JPEG, PNG e PDF.',
+            'files.*.max' => 'O arquivo não pode ser maior que 3MB.',
+            'files.max' => 'São permitidos no máximo 5 arquivos por protocolo.',
         ];
     }
 }

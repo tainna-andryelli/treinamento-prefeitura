@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AttachedFilesRequest;
 use App\Http\Requests\ProtocolsRequest;
 use App\Models\Protocols;
 use App\Models\People;
+use App\Models\AttachedFile;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProtocolsController extends Controller
 {
@@ -32,31 +35,73 @@ class ProtocolsController extends Controller
             'contributor_id' => $request->contributor_id,
         ];
 
-        Protocols::create($data);
+        $protocol = Protocols::create($data);
+        
+        if ($protocol && $request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName(); //garante filenames únicos
+                $storagePath = $file->storeAs('protocols', $filename);
+
+                AttachedFile::create([
+                    'protocol_number' => $protocol->number,
+                    'filename' => $filename,
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                    'filepath' => $storagePath
+                ]);
+            }
+        }
     }
 
     public function edit(string $number)
     {
         $protocol = Protocols::find($number);
         $people = People::select('id', 'name')->get();
-        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people]); 
+        $files = AttachedFile::where('protocol_number', $number)->get();
+        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people, 'files' => $files]); 
     }
 
-    public function update(Request $request, string $number)
+    public function update(ProtocolsRequest $request, string $number)
     {
         $protocol = Protocols::find($number);
-        $validatedData = $request->validate([
-            'description' => 'required',
-            'created_date' => 'required|date',
-            'deadline_days' => 'required|numeric',
-            'contributor_id' => 'required|exists:people,id',
-        ]);
 
-        $protocol->update($validatedData);
+        $data = [
+            'description' => $request->description,
+            'created_date' => $request->created_date,
+            'deadline_days' => $request->deadline_days,
+            'contributor_id' => $request->contributor_id,
+        ];
+
+        $protocol->update($data);
+
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName(); //garante filenames únicos
+                $storagePath = $file->storeAs('protocols', $filename);
+
+                AttachedFile::create([
+                    'protocol_number' => $protocol->number,
+                    'filename' => $filename,
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                    'filepath' => $storagePath
+                ]);
+            }
+        }
     }
 
     public function destroy(string $number)
     {
         Protocols::destroy($number);
+    }
+
+    public function destroyFile(string $id) 
+    {
+        AttachedFile::destroy($id);
+    }
+
+    public function downloadFile(string $id){
+        $file = AttachedFile::find($id);
+        return Storage::download($file->filepath, $file->filename);
     }
 }
