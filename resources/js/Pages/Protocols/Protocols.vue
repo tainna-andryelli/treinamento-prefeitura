@@ -84,7 +84,7 @@ const pageCount = computed(() => {
                             <Link
                                 color="blue"
                                 :href="route('protocols.create')"
-                                class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4 rounded-lg"
+                                class="text-light-blue-darken-2 text-button bg-light-blue-lighten-5 pa-4 rounded-lg"
                                 >CADASTRAR</Link
                             >
                         </v-card-title>

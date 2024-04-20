@@ -201,7 +201,7 @@ const submit = () => {
                                 <v-col>
                                     <label
                                         for="fileInput"
-                                        class="inline-block px-4 py-2 bg-blue text-base text-white rounded-md cursor-pointer transition duration-300 ease-in-out hover:bg-blue"
+                                        class="inline-block px-4 py-2 bg-blue-darken-1 text-base text-white rounded-md cursor-pointer"
                                     >
                                         Anexar arquivos
                                         <input
@@ -251,15 +251,17 @@ const submit = () => {
                                                     @click="removeFile(file)"
                                                     color="white"
                                                     icon="mdi-close"
-                                                    class="bg-red"
+                                                    class="bg-red-lighten-1"
                                                     size="x-small"
+                                                    elevation="0"
                                                 >
                                                 </v-btn>
                                                 <v-btn
                                                     class="text-base ml-2"
-                                                    color="blue"
+                                                    color="blue-lighten-1"
                                                     @click="downloadFile(file)"
                                                     size="small"
+                                                    elevation="0"
                                                     >{{
                                                         file.filename ||
                                                         file.name
