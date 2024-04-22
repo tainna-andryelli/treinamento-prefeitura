@@ -24,7 +24,7 @@ export default {
         <v-list>
             <v-list-subheader class="text-h5">Atende Cidadão</v-list-subheader>
             <v-list-item
-                @click="redirect('/')"
+                @click="redirect('/home')"
                 prepend-icon="mdi-home"
                 title="Home"
             ></v-list-item>

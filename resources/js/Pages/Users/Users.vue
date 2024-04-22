@@ -90,17 +90,18 @@ const showStatus = (status) => {
                                 <td>{{ showProfile(item.profile) }}</td>
                                 <td>{{ showStatus(item.active) }}</td>
                                 <td class="d-flex align-center ga-2">
-                                    <v-btn
-                                        :href="route('user.edit', item.id)"
-                                        rounded="xs"
-                                        color="light-blue-lighten-5"
-                                        prepend-icon="mdi-pencil"
-                                        size="small"
-                                        class="text-light-blue-darken-2"
-                                        variant="tonal"
-                                    >
-                                        VISUALIZAR
-                                    </v-btn>
+                                    <Link :href="route('user.edit', item.id)">
+                                        <v-btn
+                                            rounded="xs"
+                                            color="light-blue-lighten-5"
+                                            prepend-icon="mdi-pencil"
+                                            size="small"
+                                            class="text-light-blue-darken-2"
+                                            variant="tonal"
+                                        >
+                                            VISUALIZAR
+                                        </v-btn>
+                                    </Link>
                                 </td>
                             </tr>
                         </template>

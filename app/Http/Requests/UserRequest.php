@@ -14,13 +14,20 @@ class UserRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
+        $userId = $this->route("id");
+
+        $rules = [
             'name' => 'required|string|min:3|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'cpf' => ['required', 'unique:users,cpf', new CpfValidateRule],
             'profile' => 'required|string|in:T,S,A',
         ];
+
+        if(!$userId) {
+            $rules['password'] = 'required|string|min:8|confirmed';
+            $rules['cpf'] = ['required', 'unique:users,cpf', new CpfValidateRule];
+            $rules['email'] = ['required', 'string', 'email', 'max:255', 'unique:users,email'];
+        }
+
+        return $rules;
     }
 
     public function messages(): array

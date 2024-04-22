@@ -18,7 +18,7 @@ class UserController extends Controller
 
     public function create()
     {
-        return Inertia::render('Users/UsersRegister');
+        return Inertia::render('Users/RegisterUsers');
     }
 
     public function store(UserRequest $request)
@@ -42,12 +42,20 @@ class UserController extends Controller
 
     public function edit(string $id)
     {
-        //
+        $user = User::find($id);
+        return Inertia::render('Users/EditUsers', ['user' => $user]);
     }
 
-    public function update(Request $request, string $id)
+    public function update(UserRequest $request, string $id)
     {
-        //
+        $user = User::find($id);
+        $validatedData = [
+            'name' => $request->name,
+            'profile' => $request->profile,
+            'active' => $request->active,
+        ];
+
+        $user->update($validatedData);
     }
 
     public function destroy(string $id)
