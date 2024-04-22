@@ -3,14 +3,6 @@ import { ref, watch } from "vue";
 import { Link } from "@inertiajs/vue3";
 
 const isDrawerOpen = ref(false);
-
-const redirect = (route) => {
-    window.location.href = route;
-};
-
-// watch(isDrawerOpen, () => {
-//     isDrawerOpen.value = false;
-// });
 </script>
 
 <template>
