@@ -14,7 +14,7 @@ Route::get('/', function () {
         //'canRegister' => Route::has('register'),
     ]);
 });
-
+ 
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -46,4 +46,5 @@ Route::get('/protocolos/download/arquivo-{id}', [ProtocolsController::class, 'do
 //Users
 Route::get('/usuarios', [UserController::class, 'index'])->name('user.index');
 Route::get('/usuarios/registro', [UserController::class, 'create'])->name('user.create');
+Route::post('/usuarios', [UserController::class, 'store'])->name('user.store')->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/usuarios/usuario-{id}', [UserController::class, 'edit'])->name('user.edit');
