@@ -83,17 +83,22 @@ const pageCount = computed(() => {
                 <span>Atende Cidadão > Pessoas</span>
                 <v-card class="mt-8 pa-8">
                     <div class="d-flex align-center justify-space-between">
-                        <v-card-title class="text-h5 my-8 pa-0"
+                        <v-card-title class="text-h4 my-8 pa-0"
                             >Pessoas</v-card-title
                         >
 
                         <v-card-title class="pa-2">
-                            <Link
-                                color="blue"
-                                :href="route('people.create')"
-                                class="text-light-blue-darken-2 bg-light-blue-lighten-5 pa-4 rounded-lg"
-                                >CADASTRAR</Link
-                            >
+                            <Link :href="route('people.create')">
+                                <v-btn
+                                    rounded="xs"
+                                    color="light-blue-lighten-5"
+                                    size="large"
+                                    class="text-light-blue-darken-2"
+                                    variant="tonal"
+                                >
+                                    Cadastrar
+                                </v-btn>
+                            </Link>
                         </v-card-title>
                     </div>
                     <v-card-title class="pa-0 mb-8">
@@ -121,17 +126,18 @@ const pageCount = computed(() => {
                                 <td>{{ formatDate(item.birthday) }}</td>
                                 <td>{{ item.sex }}</td>
                                 <td class="d-flex align-center ga-2">
-                                    <v-btn
-                                        :href="route('people.edit', item.id)"
-                                        rounded="xs"
-                                        color="light-blue-lighten-5"
-                                        prepend-icon="mdi-pencil"
-                                        size="small"
-                                        class="text-light-blue-darken-2"
-                                        variant="tonal"
-                                    >
-                                        VISUALIZAR
-                                    </v-btn>
+                                    <Link :href="route('people.edit', item.id)">
+                                        <v-btn
+                                            rounded="xs"
+                                            color="light-blue-lighten-5"
+                                            prepend-icon="mdi-pencil"
+                                            size="small"
+                                            class="text-light-blue-darken-2"
+                                            variant="tonal"
+                                        >
+                                            VISUALIZAR
+                                        </v-btn>
+                                    </Link>
                                     <v-btn
                                         @click="openDelete(item)"
                                         rounded="xs"
@@ -166,7 +172,7 @@ const pageCount = computed(() => {
                 >
                 <v-card-actions class="ga-6">
                     <v-btn
-                        :href="route('people.index')"
+                        @click="isDialogOpen = false"
                         rounded="xs"
                         color="white"
                         size="large"

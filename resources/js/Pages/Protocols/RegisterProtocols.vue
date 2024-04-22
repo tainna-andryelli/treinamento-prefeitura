@@ -4,6 +4,7 @@ import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import Menu from "../../Components/Menu.vue";
 import { defineProps, ref } from "vue";
+import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     people: Object,
@@ -141,7 +142,7 @@ const submit = () => {
                                 <v-col>
                                     <label
                                         for="fileInput"
-                                        class="inline-block px-4 py-2 bg-blue-darken-1 text-base text-white rounded-md cursor-pointer"
+                                        class="inline-block px-4 py-2 bg-blue-lighten-1 text-base text-white rounded-md cursor-pointer"
                                     >
                                         Anexar arquivos
                                         <input
@@ -204,17 +205,18 @@ const submit = () => {
                                 </v-col>
                                 <v-col>
                                     <v-card-actions class="justify-end ga-6">
+                                        <Link :href="route('protocols.index')">
+                                            <v-btn
+                                                rounded="xs"
+                                                color="grey-darken-1"
+                                                size="large"
+                                                variant="tonal"
+                                                >Voltar</v-btn
+                                            >
+                                        </Link>
                                         <v-btn
-                                            :href="route('protocols.index')"
                                             rounded="xs"
-                                            color="grey"
-                                            size="large"
-                                            variant="tonal"
-                                            >Voltar</v-btn
-                                        >
-                                        <v-btn
-                                            rounded="xs"
-                                            color="blue"
+                                            color="blue-darken-2"
                                             size="large"
                                             variant="tonal"
                                             @click="submit"

@@ -1,50 +1,44 @@
-<script>
-export default {
-    name: "Menu",
-    data() {
-        return {
-            isDrawerOpen: false,
-        };
-    },
-    methods: {
-        redirect(route) {
-            window.location.href = route;
-        },
-    },
-    watch: {
-        group() {
-            this.isDrawerOpen = false;
-        },
-    },
+<script setup>
+import { ref, watch } from "vue";
+import { Link } from "@inertiajs/vue3";
+
+const isDrawerOpen = ref(false);
+
+const redirect = (route) => {
+    window.location.href = route;
 };
+
+// watch(isDrawerOpen, () => {
+//     isDrawerOpen.value = false;
+// });
 </script>
 
 <template>
     <v-navigation-drawer v-model="isDrawerOpen">
         <v-list>
             <v-list-subheader class="text-h5">Atende Cidadão</v-list-subheader>
+            <Link :href="route('home')">
+                <v-list-item prepend-icon="mdi-home" title="Home"></v-list-item>
+            </Link>
+            <Link :href="route('people.index')">
+                <v-list-item
+                    prepend-icon="mdi-folder-account-outline"
+                    title="Pessoas"
+                ></v-list-item>
+            </Link>
+            <Link :href="route('protocols.index')">
+                <v-list-item
+                    prepend-icon="mdi-school"
+                    title="Protocolos"
+                ></v-list-item>
+            </Link>
+            <Link :href="route('user.index')">
+                <v-list-item
+                    prepend-icon="mdi-account-group-outline"
+                    title="Usuários"
+                ></v-list-item>
+            </Link>
             <v-list-item
-                @click="redirect('/home')"
-                prepend-icon="mdi-home"
-                title="Home"
-            ></v-list-item>
-            <v-list-item
-                @click="redirect('/pessoas')"
-                prepend-icon="mdi-folder-account-outline"
-                title="Pessoas"
-            ></v-list-item>
-            <v-list-item
-                @click="redirect('/protocolos')"
-                prepend-icon="mdi-school"
-                title="Protocolos"
-            ></v-list-item>
-            <v-list-item
-                @click="redirect('/usuarios')"
-                prepend-icon="mdi-account-group-outline"
-                title="Usuários"
-            ></v-list-item>
-            <v-list-item
-                @click="redirect('/configuracoes')"
                 prepend-icon="mdi-cog-outline"
                 title="Configurações"
             ></v-list-item>

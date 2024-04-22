@@ -53,16 +53,21 @@ const showStatus = (status) => {
                 <span>Atende Cidadão > Usuários</span>
                 <v-card class="mt-8 pa-8">
                     <div class="d-flex align-center justify-space-between">
-                        <v-card-title class="text-h5 my-8 pa-0"
+                        <v-card-title class="text-h4 my-8 pa-0"
                             >Usuários</v-card-title
                         >
                         <v-card-title class="pa-2">
-                            <Link
-                                color="blue"
-                                :href="route('user.create')"
-                                class="text-light-blue-darken-2 text-button bg-light-blue-lighten-5 pa-4 rounded-lg"
-                                >REGISTRAR</Link
-                            >
+                            <Link :href="route('user.create')">
+                                <v-btn
+                                    rounded="xs"
+                                    color="light-blue-lighten-5"
+                                    size="large"
+                                    class="text-light-blue-darken-2"
+                                    variant="tonal"
+                                >
+                                    Registrar
+                                </v-btn>
+                            </Link>
                         </v-card-title>
                     </div>
                     <v-card-title class="pa-0 mb-8">

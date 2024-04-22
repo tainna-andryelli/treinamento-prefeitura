@@ -3,6 +3,7 @@ import { useForm } from "laravel-precognition-vue-inertia";
 import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import Menu from "../../Components/Menu.vue";
+import { Link } from "@inertiajs/vue3";
 
 const form = useForm("post", route("people.store"), {
     name: "",
@@ -42,7 +43,7 @@ const submit = () =>
             <v-container>
                 <span>Atende Cidadão > Pessoas > Cadastro</span>
                 <v-card class="mt-8 pa-4">
-                    <v-card-title class="text-h5 my-8"
+                    <v-card-title class="text-h4 my-8"
                         >Cadastrar Pessoa</v-card-title
                     >
                     <v-card-text>
@@ -156,17 +157,18 @@ const submit = () =>
                                 </v-col>
                                 <v-col>
                                     <v-card-actions class="justify-end ga-6">
+                                        <Link :href="route('people.index')">
+                                            <v-btn
+                                                rounded="xs"
+                                                color="grey-darken-1"
+                                                size="large"
+                                                variant="tonal"
+                                                >Voltar</v-btn
+                                            >
+                                        </Link>
                                         <v-btn
-                                            :href="route('people.index')"
                                             rounded="xs"
-                                            color="grey"
-                                            size="large"
-                                            variant="tonal"
-                                            >Voltar</v-btn
-                                        >
-                                        <v-btn
-                                            rounded="xs"
-                                            color="blue"
+                                            color="blue-darken-2"
                                             size="large"
                                             variant="tonal"
                                             @click="submit"
