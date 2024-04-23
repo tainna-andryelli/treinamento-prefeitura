@@ -61,6 +61,14 @@ const deleteItem = () => {
     });
 };
 
+const formatDate = (date) => {
+    //date: yyyy-MM-dd
+    const year = date.slice(0, 4);
+    const mounth = date.slice(5, 7);
+    const day = date.slice(8, 10);
+    return day + "/" + mounth + "/" + year;
+};
+
 //pagination
 const itemsPerPage = ref(10);
 const page = ref(1);
@@ -115,7 +123,7 @@ const pageCount = computed(() => {
                             <tr>
                                 <td>{{ item.number }}</td>
                                 <td>{{ item.description }}</td>
-                                <td>{{ item.created_date }}</td>
+                                <td>{{ formatDate(item.created_date) }}</td>
                                 <td>{{ item.deadline_days }}</td>
                                 <td>
                                     {{

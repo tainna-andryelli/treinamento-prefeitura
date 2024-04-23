@@ -35,11 +35,8 @@ const formatDate = (date) => {
 };
 
 const formatCpf = (cpf) => {
-    const part1 = cpf.slice(0, 3);
-    const part2 = cpf.slice(3, 6);
-    const part3 = cpf.slice(6, 9);
-    const part4 = cpf.slice(9, 11);
-    return part1 + "." + part2 + "." + part3 + "-" + part4;
+    cpf = cpf.replace(/\D/g, ""); //remove caracteres especiais
+    return cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"); //insere pontos e traços
 };
 
 const openDelete = (item) => {
