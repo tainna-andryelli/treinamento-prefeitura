@@ -13,7 +13,7 @@ Route::get('/', function () {
         'canLogin' => Route::has('login'),
         //'canRegister' => Route::has('register'),
     ]);
-});
+})->name('welcome');
  
 Route::middleware([
     'auth:sanctum',
@@ -49,4 +49,3 @@ Route::get('/usuarios/registro', [UserController::class, 'create'])->name('user.
 Route::post('/usuarios', [UserController::class, 'store'])->name('user.store')->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/usuarios/usuario-{id}', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/usuarios/usuario-{id}', [UserController::class, 'update'])->name('user.update')->middleware([HandlePrecognitiveRequests::class]);
-

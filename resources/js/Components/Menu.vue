@@ -1,8 +1,23 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { Link } from "@inertiajs/vue3";
+import axios from "axios";
 
 const isDrawerOpen = ref(false);
+const isSubmitting = ref(false);
+
+const logout = () => {
+    isSubmitting.value = true;
+    axios
+        .post(route("logout"))
+        .then(() => {
+            window.location.href = route("welcome");
+        })
+        .catch((error) => {
+            console.error("Erro ao efetuar logout:", error);
+            isSubmitting.value = false;
+        });
+};
 </script>
 
 <template>
@@ -55,11 +70,37 @@ const isDrawerOpen = ref(false);
 
                 <v-card min-width="150px">
                     <v-list :lines="false" nav density="compact">
-                        <v-list-item prepend-icon="mdi-account-outline">
-                            <v-list-item-title>Meu Perfil</v-list-item-title>
+                        <v-list-item>
+                            <v-btn
+                                rounded="xs"
+                                color="light-blue-lighten-5"
+                                prepend-icon="mdi-account-outline"
+                                size="small"
+                                class="text-light-blue-darken-2"
+                                variant="tonal"
+                            >
+                                Meu Perfil
+                            </v-btn>
                         </v-list-item>
-                        <v-list-item prepend-icon="mdi-logout">
-                            <v-list-item-title>Logout</v-list-item-title>
+                        <v-list-item>
+                            <form
+                                :action="route('logout')"
+                                method="post"
+                                @submit.prevent="submit"
+                            >
+                                <v-btn
+                                    :type="submit"
+                                    @click="logout"
+                                    rounded="xs"
+                                    color="light-blue-lighten-5"
+                                    prepend-icon="mdi-logout"
+                                    size="small"
+                                    class="text-light-blue-darken-2"
+                                    variant="tonal"
+                                >
+                                    Sair
+                                </v-btn>
+                            </form>
                         </v-list-item>
                     </v-list>
                 </v-card>
