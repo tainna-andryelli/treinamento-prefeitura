@@ -5,6 +5,7 @@ import "vue-toast-notification/dist/theme-sugar.css";
 import { defineProps, ref } from "vue";
 import Menu from "../../Components/Menu.vue";
 import { Link } from "@inertiajs/vue3";
+import axios from "axios";
 
 const props = defineProps({
     protocol: Object,
@@ -76,30 +77,24 @@ const deleteFile = () => {
     });
 };
 
-const downloadFileForm = ref();
 const downloadFile = (file) => {
-    console.log("realiza download de:", file);
-    downloadFileForm.value = useForm(
-        "get",
-        `/protocolos/download/arquivo-${file.id}`,
-        {
-            id: file.id,
-        }
-    );
+    axios
+        .get(route("protocols.downloadFile", { id: file.id }), {
+            responseType: "blob",
+        })
+        .then((response) => {
+            const url = window.URL.createObjectURL(response.data);
+            const downloadLink = document.getElementById("downloadLink");
+            downloadLink.href = url;
 
-    downloadFileForm.value.submit({
-        preserveScroll: true,
-        onSuccess: () => {
-            toast.success("Download realizado com sucesso!", {
-                position: "top-right",
-            });
-        },
-        onError: () => {
+            downloadLink.setAttribute("download", file.filename || file.name); // nome do arquivo para download
+            downloadLink.click();
+        })
+        .catch((error) => {
             toast.error("Erro ao realizar download!", {
                 position: "top-right",
             });
-        },
-    });
+        });
 };
 
 const submit = () => {
@@ -257,17 +252,21 @@ const submit = () => {
                                                     elevation="0"
                                                 >
                                                 </v-btn>
-                                                <v-btn
-                                                    class="text-base ml-2"
-                                                    color="blue-lighten-1"
-                                                    @click="downloadFile(file)"
-                                                    size="small"
-                                                    elevation="0"
-                                                    >{{
-                                                        file.filename ||
-                                                        file.name
-                                                    }}</v-btn
-                                                >
+                                                <a id="downloadLink">
+                                                    <v-btn
+                                                        class="text-base ml-2"
+                                                        color="blue-lighten-1"
+                                                        @click="
+                                                            downloadFile(file)
+                                                        "
+                                                        size="small"
+                                                        elevation="0"
+                                                        >{{
+                                                            file.filename ||
+                                                            file.name
+                                                        }}</v-btn
+                                                    >
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
