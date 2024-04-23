@@ -1,12 +1,12 @@
 <script setup>
 import Menu from "../../Components/Menu.vue";
 import { defineProps, ref, computed } from "vue";
-import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     users: Object,
+    userAuth: Object,
 });
 
 const search = ref("");
@@ -57,17 +57,21 @@ const showStatus = (status) => {
                             >Usuários</v-card-title
                         >
                         <v-card-title class="pa-2">
-                            <Link :href="route('user.create')">
-                                <v-btn
-                                    rounded="xs"
-                                    color="light-blue-lighten-5"
-                                    size="large"
-                                    class="text-light-blue-darken-2"
-                                    variant="tonal"
-                                >
-                                    Registrar
-                                </v-btn>
-                            </Link>
+                            <template
+                                v-if="userAuth && userAuth.profile !== 'A'"
+                            >
+                                <Link :href="route('user.create')">
+                                    <v-btn
+                                        rounded="xs"
+                                        color="light-blue-lighten-5"
+                                        size="large"
+                                        class="text-light-blue-darken-2"
+                                        variant="tonal"
+                                    >
+                                        Registrar
+                                    </v-btn>
+                                </Link>
+                            </template>
                         </v-card-title>
                     </div>
                     <v-card-title class="pa-0 mb-8">

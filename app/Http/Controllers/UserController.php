@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Inertia\Inertia;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -13,12 +14,14 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return Inertia::render('Users/Users', ['users' => $users]);
+        $userAuth = Auth::user();
+        return Inertia::render('Users/Users', ['users' => $users, 'userAuth' => $userAuth]);
     }
 
     public function create()
     {
-        return Inertia::render('Users/RegisterUsers');
+        $userAuth = Auth::user();
+        return Inertia::render('Users/RegisterUsers', ['userAuth' => $userAuth]);
     }
 
     public function store(UserRequest $request)
@@ -35,15 +38,11 @@ class UserController extends Controller
         User::create($validatedData);
     }
 
-    public function show(string $id)
-    {
-        //
-    }
-
     public function edit(string $id)
     {
         $user = User::find($id);
-        return Inertia::render('Users/EditUsers', ['user' => $user]);
+        $userAuth = Auth::user();
+        return Inertia::render('Users/EditUsers', ['user' => $user, 'userAuth' => $userAuth]);
     }
 
     public function update(UserRequest $request, string $id)
@@ -56,10 +55,5 @@ class UserController extends Controller
         ];
 
         $user->update($validatedData);
-    }
-
-    public function destroy(string $id)
-    {
-        //
     }
 }

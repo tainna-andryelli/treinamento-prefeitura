@@ -7,7 +7,10 @@ import { ref, defineProps } from "vue";
 
 const props = defineProps({
     user: Object,
+    userAuth: Object,
 });
+
+const isEditable = ref(props.userAuth.profile === "T");
 
 const form = useForm("put", route("user.update", props.user.id), {
     name: props.user.name,
@@ -81,6 +84,7 @@ const submit = () => {
                                         label="Nome:*"
                                         variant="outlined"
                                         @change="form.validate('name')"
+                                        :readonly="!isEditable"
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('name')"
@@ -92,10 +96,10 @@ const submit = () => {
                                 <v-col>
                                     <v-text-field
                                         v-model="form.email"
-                                        label="E-mail:*"
+                                        label="E-mail:"
                                         variant="outlined"
                                         type="email"
-                                        disabled
+                                        readonly
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('email')"
@@ -109,10 +113,10 @@ const submit = () => {
                                 <v-col>
                                     <v-text-field
                                         v-model="form.cpf"
-                                        label="CPF:*"
+                                        label="CPF:"
                                         variant="outlined"
                                         v-mask="'###.###.###-##'"
-                                        disabled
+                                        readonly
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('cpf')"
@@ -132,6 +136,7 @@ const submit = () => {
                                         ]"
                                         @change="form.validate('profile')"
                                         variant="outlined"
+                                        :readonly="!isEditable"
                                     ></v-select>
                                     <span
                                         v-if="form.invalid('profile')"
@@ -149,6 +154,7 @@ const submit = () => {
                                         :items="['Ativo', 'Desativado']"
                                         variant="outlined"
                                         @change="form.validate('active')"
+                                        :readonly="!isEditable"
                                     ></v-select>
                                     <span
                                         v-if="form.invalid('active')"
@@ -168,14 +174,18 @@ const submit = () => {
                                                 >Voltar</v-btn
                                             >
                                         </Link>
-                                        <v-btn
-                                            rounded="xs"
-                                            color="blue-darken-2"
-                                            size="large"
-                                            variant="tonal"
-                                            @click="submit"
-                                            >Salvar</v-btn
+                                        <template
+                                            v-if="userAuth.profile === 'T'"
                                         >
+                                            <v-btn
+                                                rounded="xs"
+                                                color="blue-darken-2"
+                                                size="large"
+                                                variant="tonal"
+                                                @click="submit"
+                                                >Salvar</v-btn
+                                            >
+                                        </template>
                                     </v-card-actions>
                                 </v-col>
                             </v-row>

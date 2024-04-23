@@ -3,7 +3,11 @@ import { useForm } from "laravel-precognition-vue-inertia";
 import { Link } from "@inertiajs/vue3";
 import Menu from "../../Components/Menu.vue";
 import { useToast } from "vue-toast-notification";
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
+
+const props = defineProps({
+    userAuth: Object,
+});
 
 const form = useForm("post", route("user.store"), {
     name: "",
@@ -18,7 +22,10 @@ const form = useForm("post", route("user.store"), {
 
 const toast = useToast();
 
-const selectedProfile = ref(null);
+const selectedProfile = ref(
+    props.userAuth.profile === "T" ? null : "Atendente"
+);
+
 const profile = (option) => {
     if (option === "Administrador da TI") {
         return "T";
@@ -151,17 +158,28 @@ const submit = () => {
                                     </span>
                                 </v-col>
                                 <v-col>
-                                    <v-select
-                                        v-model="selectedProfile"
-                                        label="Perfil:*"
-                                        :items="[
-                                            'Administrador da TI',
-                                            'Administrador do Sistema',
-                                            'Atendente',
-                                        ]"
-                                        variant="outlined"
-                                        @change="form.validate('profile')"
-                                    ></v-select>
+                                    <template v-if="userAuth.profile === 'T'">
+                                        <v-select
+                                            v-model="selectedProfile"
+                                            label="Perfil:*"
+                                            :items="[
+                                                'Administrador da TI',
+                                                'Administrador do Sistema',
+                                                'Atendente',
+                                            ]"
+                                            variant="outlined"
+                                            @change="form.validate('profile')"
+                                        ></v-select>
+                                    </template>
+                                    <template v-else>
+                                        <v-text-field
+                                            v-model="selectedProfile"
+                                            label="Perfil:*"
+                                            variant="outlined"
+                                            readonly
+                                            @change="form.validate('profile')"
+                                        ></v-text-field>
+                                    </template>
                                     <span
                                         v-if="form.invalid('profile')"
                                         class="text-base text-red-500"
