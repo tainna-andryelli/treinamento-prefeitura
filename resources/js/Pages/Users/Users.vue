@@ -17,8 +17,11 @@ const headers = [
     { title: "E-mail", value: "email" },
     { title: "Perfil", value: "profile" },
     { title: "Status", value: "active" },
-    { title: "Ações", sortable: false },
 ];
+
+if (props.userAuth.profile !== "A") {
+    headers.push({ title: "Ações", sortable: false });
+}
 
 //pagination
 const itemsPerPage = ref(10);
@@ -98,7 +101,10 @@ const showStatus = (status) => {
                                 <td>{{ item.email }}</td>
                                 <td>{{ showProfile(item.profile) }}</td>
                                 <td>{{ showStatus(item.active) }}</td>
-                                <td class="d-flex align-center ga-2">
+                                <td
+                                    v-if="userAuth.profile !== 'A'"
+                                    class="d-flex align-center ga-2"
+                                >
                                     <Link :href="route('user.edit', item.id)">
                                         <v-btn
                                             rounded="xs"

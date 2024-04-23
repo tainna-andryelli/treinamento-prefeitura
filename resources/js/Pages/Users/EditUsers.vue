@@ -10,7 +10,10 @@ const props = defineProps({
     userAuth: Object,
 });
 
-const isEditable = ref(props.userAuth.profile === "T");
+//Editável para Admin do Sistema se o usuário a ser editado for Atendente
+const isEditable = ref(
+    props.userAuth.profile === "S" && props.user.profile === "A"
+);
 
 const form = useForm("put", route("user.update", props.user.id), {
     name: props.user.name,
@@ -99,7 +102,7 @@ const submit = () => {
                                         label="E-mail:"
                                         variant="outlined"
                                         type="email"
-                                        readonly
+                                        disabled
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('email')"
@@ -116,7 +119,7 @@ const submit = () => {
                                         label="CPF:"
                                         variant="outlined"
                                         v-mask="'###.###.###-##'"
-                                        readonly
+                                        disabled
                                     ></v-text-field>
                                     <span
                                         v-if="form.invalid('cpf')"
@@ -136,7 +139,7 @@ const submit = () => {
                                         ]"
                                         @change="form.validate('profile')"
                                         variant="outlined"
-                                        :readonly="!isEditable"
+                                        :readonly="userAuth.profile === 'S'"
                                     ></v-select>
                                     <span
                                         v-if="form.invalid('profile')"
@@ -175,7 +178,10 @@ const submit = () => {
                                             >
                                         </Link>
                                         <template
-                                            v-if="userAuth.profile === 'T'"
+                                            v-if="
+                                                userAuth.profile === 'T' ||
+                                                isEditable
+                                            "
                                         >
                                             <v-btn
                                                 rounded="xs"

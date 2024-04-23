@@ -26,16 +26,20 @@ class UserController extends Controller
 
     public function store(UserRequest $request)
     {
-        $validatedData = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'profile' => $request->profile,
-            'cpf' => $request->cpf,
-            'active' => $request->active,
-        ];
+        $userAuth = Auth::user();
 
-        User::create($validatedData);
+        if($userAuth->profile === 'T' || $userAuth->profile === 'S'){
+            $validatedData = [
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'profile' => $request->profile,
+                'cpf' => $request->cpf,
+                'active' => $request->active,
+            ];
+    
+            User::create($validatedData);
+        } 
     }
 
     public function edit(string $id)
@@ -48,12 +52,16 @@ class UserController extends Controller
     public function update(UserRequest $request, string $id)
     {
         $user = User::find($id);
-        $validatedData = [
-            'name' => $request->name,
-            'profile' => $request->profile,
-            'active' => $request->active,
-        ];
+        $userAuth = Auth::user();
 
-        $user->update($validatedData);
+        if($userAuth->profile === 'T' || ($userAuth->profile === 'S' && $user->profile === 'A')){
+            $validatedData = [
+                'name' => $request->name,
+                'profile' => $request->profile,
+                'active' => $request->active,
+            ];
+    
+            $user->update($validatedData);
+        }
     }
 }
