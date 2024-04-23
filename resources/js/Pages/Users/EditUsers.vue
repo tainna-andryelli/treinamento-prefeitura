@@ -48,7 +48,7 @@ const selectedStatus = ref(props.user.active === "S" ? "Ativo" : "Desativado");
 
 const submit = () => {
     form.profile = profileBD(selectedProfile.value);
-    form.active = selectedProfile.value === "Ativo" ? "S" : "N";
+    form.active = selectedStatus.value === "Ativo" ? "S" : "N";
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
