@@ -41,6 +41,7 @@ Route::get('/protocolos/protocolo-{id}', [ProtocolsController::class, 'edit'])->
 Route::put('/protocolos/protocolo-{id}', [ProtocolsController::class, 'update'])->name('protocols.update')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('protocolos/protocolo-{id}', [ProtocolsController::class, 'destroy'])->name('protocols.destroy')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('protocolos/arquivo-{id}', [ProtocolsController::class, 'destroyFile'])->name('protocols.destroyFile');
+Route::post('/protocolos/protocolo-{id}/upload', [ProtocolsController::class, 'uploadFile'])->name('protocols.uploadFile')->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/protocolos/download/arquivo-{id}', [ProtocolsController::class, 'downloadFile'])->name('protocols.downloadFile');
 
 //Users

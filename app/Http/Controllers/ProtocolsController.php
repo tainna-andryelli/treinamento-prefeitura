@@ -95,6 +95,23 @@ class ProtocolsController extends Controller
         Protocols::destroy($number);
     }
 
+    public function uploadFile(AttachedFilesRequest $request, $protocolNumber) {
+        if ($request->hasFile('files')) {
+            foreach ($request->file('files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName(); //garante filenames únicos
+                $storagePath = $file->storeAs('protocols', $filename);
+
+                AttachedFile::create([
+                    'protocol_number' => $protocolNumber,
+                    'filename' => $filename,
+                    'mime_type' => $file->getMimeType(),
+                    'size' => $file->getSize(),
+                    'filepath' => $storagePath
+                ]);
+            }
+        }
+    }
+
     public function destroyFile(string $id) 
     {
         AttachedFile::destroy($id);

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\AttachedFile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AttachedFilesRequest extends FormRequest
@@ -19,10 +20,13 @@ class AttachedFilesRequest extends FormRequest
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
+    //$totalFiles = $existingFilesCount + count($this->file('files', []));
     public function rules(): array
     {
+        $existingFilesCount = $this->route('id') ? AttachedFile::where('protocol_number', $this->route('id'))->count() :0;
+        $maxFiles = 5 - $existingFilesCount;
         return [
-            'files' => 'max:5', 
+            'files' => 'max:' . $maxFiles, 
             'files.*' => 'mimes:jpg,jpeg,png,pdf|max:3072',
         ];
     }

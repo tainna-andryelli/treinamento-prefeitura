@@ -39,6 +39,7 @@ const removeFile = (index) => {
 };
 
 const submit = () => {
+    console.log(form.files);
     form.contributor_id = selectedContributorId.value;
 
     form.submit({

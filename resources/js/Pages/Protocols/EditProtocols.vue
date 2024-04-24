@@ -30,15 +30,29 @@ const form = useForm("put", route("protocols.update", props.protocol.number), {
     created_date: props.protocol.created_date,
     deadline_days: props.protocol.deadline_days,
     contributor_id: props.protocol.contributor_id,
-    files: Array.from(props.files),
+    //files: Array.from(props.files),
+    //files: [],
 });
 
+const formFiles = useForm(
+    "post",
+    route("protocols.uploadFile", props.protocol.number),
+    {
+        files: [],
+    }
+);
+
 const onFileChange = (event) => {
-    const newFiles = Array.from(event.target.files);
-    form.files = form.files.concat(newFiles);
-    form.validate("files");
+    const newFile = Array.from(event.target.files);
+    formFiles.files = formFiles.files.concat(newFile);
+    formFiles.validate("files");
 };
 
+const removeNewFile = (index) => {
+    formFiles.files.splice(index, 1);
+};
+
+//Remove arquivos do Banco de dados:
 const removeFile = (fileToRemove) => {
     selectedFileToRemove.value = fileToRemove;
     isDialogOpen.value = true;
@@ -55,19 +69,10 @@ const deleteFile = () => {
     deleteForm.value.submit({
         preserveScroll: true,
         onSuccess: () => {
+            isDialogOpen.value = false;
             toast.success("Arquivo excluído com sucesso!", {
                 position: "top-right",
             });
-
-            //atualiza a lista que renderiza Arquivos Selecionados ao deletar um arquivo com sucesso:
-            const index = form.files.findIndex(
-                (file) => selectedFileToRemove.value.id === file.id
-            );
-            if (index !== -1) {
-                form.files.splice(index, 1);
-            }
-
-            isDialogOpen.value = false;
         },
         onError: () => {
             toast.error("Erro ao excluir arquivo!", {
@@ -101,11 +106,22 @@ const submit = () => {
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
-            toast.success("Protocolo editado com sucesso!", {
-                position: "top-right",
+            formFiles.submit({
+                preserveScroll: true,
+                onSuccess: () => {
+                    toast.success("Protocolo editado com sucesso!", {
+                        position: "top-right",
+                    });
+                    formFiles.files = [];
+                },
+                onError: () => {
+                    toast.error("Erro ao anexar arquivo!", {
+                        position: "top-right",
+                    });
+                },
             });
         },
-        onError: (error) => {
+        onError: () => {
             toast.error("Erro ao editar protocolo!", {
                 position: "top-right",
             });
@@ -197,7 +213,7 @@ const submit = () => {
                                 <v-col>
                                     <label
                                         for="fileInput"
-                                        class="inline-block px-4 py-2 bg-blue-lighten-1 text-base text-white rounded-md cursor-pointer"
+                                        class="inline-block px-4 py-2 bg-blue text-base text-white rounded-md cursor-pointer"
                                     >
                                         Anexar arquivos
                                         <input
@@ -209,29 +225,34 @@ const submit = () => {
                                             class="hidden"
                                         />
                                     </label>
+                                    <span class="ml-2"
+                                        >Até 5 arquivos nos formatos: JPG, JPEG,
+                                        PNG e PDF.</span
+                                    >
                                     <span
                                         v-if="
-                                            form.errors.files ||
-                                            form.errors['files.0'] ||
-                                            form.errors['files.1'] ||
-                                            form.errors['files.2'] ||
-                                            form.errors['files.3'] ||
-                                            form.errors['files.4']
+                                            formFiles.errors.files ||
+                                            formFiles.errors['files.0'] ||
+                                            formFiles.errors['files.1'] ||
+                                            formFiles.errors['files.2'] ||
+                                            formFiles.errors['files.3'] ||
+                                            formFiles.errors['files.4']
                                         "
                                         v-text="
-                                            form.errors.files ||
-                                            form.errors['files.0'] ||
-                                            form.errors['files.1'] ||
-                                            form.errors['files.2'] ||
-                                            form.errors['files.3'] ||
-                                            form.errors['files.4']
+                                            formFiles.errors.files ||
+                                            formFiles.errors['files.0'] ||
+                                            formFiles.errors['files.1'] ||
+                                            formFiles.errors['files.2'] ||
+                                            formFiles.errors['files.3'] ||
+                                            formFiles.errors['files.4']
                                         "
                                         class="block text-base text-red-500 mt-4"
                                     >
                                     </span>
                                     <div
                                         v-if="
-                                            form.files && form.files.length > 0
+                                            files.length > 0 ||
+                                            formFiles.files.length > 0
                                         "
                                         class="mt-4"
                                     >
@@ -240,21 +261,21 @@ const submit = () => {
                                         </p>
                                         <ul class="d-flex flex-column ga-1">
                                             <li
-                                                v-for="file in form.files"
+                                                v-for="file in props.files"
                                                 :key="file.id"
                                             >
                                                 <v-btn
                                                     @click="removeFile(file)"
                                                     color="white"
-                                                    icon="mdi-close"
-                                                    class="bg-red-lighten-1"
-                                                    size="x-small"
+                                                    class="text-red-lighten-1"
+                                                    icon="mdi-delete"
+                                                    size="xs-small"
                                                     elevation="0"
                                                 >
                                                 </v-btn>
                                                 <a id="downloadLink">
                                                     <v-btn
-                                                        class="text-base ml-2"
+                                                        class="text-base ml-2 text-white"
                                                         color="blue-lighten-1"
                                                         @click="
                                                             downloadFile(file)
@@ -268,6 +289,48 @@ const submit = () => {
                                                     >
                                                 </a>
                                             </li>
+                                            <template
+                                                v-if="
+                                                    formFiles.files &&
+                                                    formFiles.files.length > 0
+                                                "
+                                            >
+                                                <li
+                                                    v-for="(
+                                                        file, index
+                                                    ) in formFiles.files"
+                                                    :key="index"
+                                                >
+                                                    <v-btn
+                                                        @click="
+                                                            removeNewFile(index)
+                                                        "
+                                                        color="white"
+                                                        class="text-red-lighten-1"
+                                                        icon="mdi-delete"
+                                                        size="xs-small"
+                                                        elevation="0"
+                                                    >
+                                                    </v-btn>
+                                                    <a id="downloadLink">
+                                                        <v-btn
+                                                            class="text-base ml-2"
+                                                            color="green-lighten-1"
+                                                            @click="
+                                                                downloadFile(
+                                                                    file
+                                                                )
+                                                            "
+                                                            size="small"
+                                                            elevation="0"
+                                                            >{{
+                                                                file.filename ||
+                                                                file.name
+                                                            }}</v-btn
+                                                        >
+                                                    </a>
+                                                </li>
+                                            </template>
                                         </ul>
                                     </div>
                                 </v-col>
