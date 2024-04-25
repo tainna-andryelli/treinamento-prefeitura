@@ -45,6 +45,12 @@ const logout = () => {
                     title="Usuários"
                 ></v-list-item>
             </Link>
+            <Link :href="route('departments.index')">
+                <v-list-item
+                    prepend-icon="mdi-account-group-outline"
+                    title="Departamentos"
+                ></v-list-item>
+            </Link>
             <v-list-item
                 prepend-icon="mdi-cog-outline"
                 title="Configurações"

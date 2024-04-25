@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
 use App\Http\Controllers\UserController;
@@ -50,3 +51,12 @@ Route::get('/usuarios/registro', [UserController::class, 'create'])->name('user.
 Route::post('/usuarios', [UserController::class, 'store'])->name('user.store')->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/usuarios/usuario-{id}', [UserController::class, 'edit'])->name('user.edit');
 Route::put('/usuarios/usuario-{id}', [UserController::class, 'update'])->name('user.update')->middleware([HandlePrecognitiveRequests::class]);
+
+//Departments
+Route::get('/departamentos', [DepartmentsController::class, 'index'])->name('departments.index');
+Route::get('/departamentos/cadastro', [DepartmentsController::class, 'create'])->name('departments.create');
+Route::post('/departamentos', [DepartmentsController::class, 'store'])->name('departments.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::get('/departamentos/departamento-{id}', [DepartmentsController::class, 'edit'])->name('departments.edit');
+Route::put('/departamentos/departamento-{id}', [DepartmentsController::class, 'update'])->name('departments.update')->middleware([HandlePrecognitiveRequests::class]);
+
+

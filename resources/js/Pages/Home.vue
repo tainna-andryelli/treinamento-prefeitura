@@ -29,6 +29,12 @@ import { Link } from "@inertiajs/vue3";
                         >aqui</Link
                     >.
                 </p>
+                <p>
+                    Confira os <strong>Departamentos</strong> clicando
+                    <Link :href="route('departments.index')" class="text-blue"
+                        >aqui</Link
+                    >.
+                </p>
             </v-container>
         </v-main>
     </v-app>
