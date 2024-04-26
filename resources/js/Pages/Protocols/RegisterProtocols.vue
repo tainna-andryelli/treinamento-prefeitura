@@ -192,9 +192,11 @@ const submit = () => {
                                                 <v-btn
                                                     @click="removeFile(index)"
                                                     color="white"
-                                                    icon="mdi-close"
-                                                    class="bg-red-lighten-1"
-                                                    size="x-small"
+                                                    icon="mdi-delete"
+                                                    class="text-red-lighten-1"
+                                                    size="xs-small"
+                                                    variant="tonal"
+                                                    elevation="0"
                                                 >
                                                 </v-btn>
                                                 <span class="text-base ml-2">{{

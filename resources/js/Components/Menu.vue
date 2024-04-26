@@ -47,7 +47,7 @@ const logout = () => {
             </Link>
             <Link :href="route('departments.index')">
                 <v-list-item
-                    prepend-icon="mdi-account-group-outline"
+                    prepend-icon="mdi-badge-account-horizontal-outline"
                     title="Departamentos"
                 ></v-list-item>
             </Link>
@@ -89,24 +89,17 @@ const logout = () => {
                             </v-btn>
                         </v-list-item>
                         <v-list-item>
-                            <form
-                                :action="route('logout')"
-                                method="post"
-                                @submit.prevent="submit"
+                            <v-btn
+                                @click="logout"
+                                rounded="xs"
+                                color="light-blue-lighten-5"
+                                prepend-icon="mdi-logout"
+                                size="small"
+                                class="text-light-blue-darken-2"
+                                variant="tonal"
                             >
-                                <v-btn
-                                    :type="submit"
-                                    @click="logout"
-                                    rounded="xs"
-                                    color="light-blue-lighten-5"
-                                    prepend-icon="mdi-logout"
-                                    size="small"
-                                    class="text-light-blue-darken-2"
-                                    variant="tonal"
-                                >
-                                    Sair
-                                </v-btn>
-                            </form>
+                                Sair
+                            </v-btn>
                         </v-list-item>
                     </v-list>
                 </v-card>

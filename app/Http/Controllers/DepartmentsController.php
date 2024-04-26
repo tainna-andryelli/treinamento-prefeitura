@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Access;
 use App\Models\Departments;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -31,7 +33,14 @@ class DepartmentsController extends Controller
     public function edit(String $id)
     {
         $department = Departments::find($id);
-        return Inertia::render('Departments/EditDepartments', ['department' => $department]);
+
+        $users = User::all();
+
+        $access = Access::where('department_id', $id)->get();
+        $usersInAccess = $access->pluck('user_id')->unique()->toArray();
+        $usersInAccessNames = User::whereIn('id', $usersInAccess)->get(); 
+
+        return Inertia::render('Departments/EditDepartments', ['department' => $department, 'users' => $users, 'access' => $access, 'usersInAccess'=> $usersInAccessNames]);
     }
 
     public function update(Request $request, String $id)

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
@@ -41,7 +42,7 @@ Route::post('/protocolos', [ProtocolsController::class, 'store'])->name('protoco
 Route::get('/protocolos/protocolo-{id}', [ProtocolsController::class, 'edit'])->name('protocols.edit');
 Route::put('/protocolos/protocolo-{id}', [ProtocolsController::class, 'update'])->name('protocols.update')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('protocolos/protocolo-{id}', [ProtocolsController::class, 'destroy'])->name('protocols.destroy')->middleware([HandlePrecognitiveRequests::class]);
-Route::delete('protocolos/arquivo-{id}', [ProtocolsController::class, 'destroyFile'])->name('protocols.destroyFile');
+Route::delete('/protocolos/arquivo-{id}', [ProtocolsController::class, 'destroyFile'])->name('protocols.destroyFile');
 Route::post('/protocolos/protocolo-{id}/upload', [ProtocolsController::class, 'uploadFile'])->name('protocols.uploadFile')->middleware([HandlePrecognitiveRequests::class]);
 Route::get('/protocolos/download/arquivo-{id}', [ProtocolsController::class, 'downloadFile'])->name('protocols.downloadFile');
 
@@ -59,4 +60,7 @@ Route::post('/departamentos', [DepartmentsController::class, 'store'])->name('de
 Route::get('/departamentos/departamento-{id}', [DepartmentsController::class, 'edit'])->name('departments.edit');
 Route::put('/departamentos/departamento-{id}', [DepartmentsController::class, 'update'])->name('departments.update')->middleware([HandlePrecognitiveRequests::class]);
 
+//Access
+Route::post('/departamentos/departamento-{id}', [AccessController::class, 'store'])->name('access.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::delete('/departamentos/departamento-{departmentId}/usuario-{userId}', [AccessController::class, 'destroy'])->name('access.destroy')->middleware([HandlePrecognitiveRequests::class]);
 

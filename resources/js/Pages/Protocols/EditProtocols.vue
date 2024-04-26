@@ -270,6 +270,7 @@ const submit = () => {
                                                     class="text-red-lighten-1"
                                                     icon="mdi-delete"
                                                     size="xs-small"
+                                                    variant="tonal"
                                                     elevation="0"
                                                 >
                                                 </v-btn>
@@ -308,6 +309,7 @@ const submit = () => {
                                                         color="white"
                                                         class="text-red-lighten-1"
                                                         icon="mdi-delete"
+                                                        variant="tonal"
                                                         size="xs-small"
                                                         elevation="0"
                                                     >
