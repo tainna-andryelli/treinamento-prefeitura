@@ -17,4 +17,9 @@ class Departments extends Model
     {
         return $this->belongsToMany(User::class, 'accesses');
     }
+
+    public function protocols()
+    {
+        return $this->hasMany(Protocols::class);
+    }
 }

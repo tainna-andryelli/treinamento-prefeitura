@@ -8,6 +8,7 @@ import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     people: Object,
+    departments: Object,
 });
 
 const itemProps = (item) => {
@@ -18,13 +19,13 @@ const itemProps = (item) => {
 };
 
 const toast = useToast();
-const selectedContributorId = ref(null);
 
 const form = useForm("post", route("protocols.store"), {
     description: "",
     created_date: "",
     deadline_days: "",
-    contributor_id: "",
+    contributor_id: null,
+    department_id: null,
     files: [],
 });
 
@@ -39,13 +40,10 @@ const removeFile = (index) => {
 };
 
 const submit = () => {
-    console.log(form.files);
-    form.contributor_id = selectedContributorId.value;
-
+    console.log(form);
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
-            selectedContributorId.value = null;
             form.reset();
             toast.success("Protocolo registrado com sucesso!", {
                 position: "top-right",
@@ -120,7 +118,7 @@ const submit = () => {
                                 </v-col>
                                 <v-col>
                                     <v-select
-                                        v-model="selectedContributorId"
+                                        v-model="form.contributor_id"
                                         label="Contribuinte:*"
                                         variant="outlined"
                                         :item-props="itemProps"
@@ -141,6 +139,27 @@ const submit = () => {
                             </v-row>
                             <v-row>
                                 <v-col>
+                                    <v-select
+                                        v-model="form.department_id"
+                                        label="Departamento:*"
+                                        variant="outlined"
+                                        :item-props="itemProps"
+                                        :items="props.departments"
+                                        item-value="id"
+                                        item-text="name"
+                                        @change="form.validate('department_id')"
+                                    ></v-select>
+                                    <span
+                                        v-if="form.invalid('department_id')"
+                                        class="text-base text-red-500"
+                                    >
+                                        {{ form.errors.department_id }}
+                                    </span>
+                                </v-col>
+                                <v-col></v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col>
                                     <label
                                         for="fileInput"
                                         class="inline-block px-4 py-2 bg-blue-lighten-1 text-base text-white rounded-md cursor-pointer"
@@ -155,6 +174,10 @@ const submit = () => {
                                             class="hidden"
                                         />
                                     </label>
+                                    <span class="ml-2"
+                                        >Até 5 arquivos nos formatos: JPG, JPEG,
+                                        PNG ou PDF.</span
+                                    >
                                     <span
                                         v-if="
                                             form.errors.files ||

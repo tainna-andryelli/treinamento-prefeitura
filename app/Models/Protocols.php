@@ -15,7 +15,8 @@ class Protocols extends Model
         'description',
         'created_date',
         'deadline_days',
-        'contributor_id'
+        'contributor_id',
+        'department_id',
     ];
 
     public function contributor()
@@ -26,5 +27,10 @@ class Protocols extends Model
     public function attachedFiles()
     {
         return $this->hasMany(AttachedFile::class,'protocol_number', 'number');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Departments::class);
     }
 }

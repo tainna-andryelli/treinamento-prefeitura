@@ -9,11 +9,11 @@ import { Link } from "@inertiajs/vue3";
 const props = defineProps({
     protocols: Object,
     people: Object,
+    departments: Object,
 });
 
 const toast = useToast();
 const deleteForm = ref();
-
 const isDialogOpen = ref(false);
 const protocol = ref(null);
 const search = ref("");
@@ -24,12 +24,20 @@ const headers = [
     { title: "Data de Criação", value: "create_date" },
     { title: "Prazo (em dias)", value: "deadline_days" },
     { title: "Contribuinte", value: "contributor_id" },
+    { title: "Departamento", value: "department_id" },
     { title: "Ações", sortable: false },
 ];
 
-const getNameContributor = (personId) => {
+const getContributorName = (personId) => {
     const contributor = props.people.find((person) => person.id === personId);
     return contributor ? contributor.name : "Nome não encontrado";
+};
+
+const getDepartmentName = (departmentId) => {
+    const department = props.departments.find(
+        (department) => department.id === departmentId
+    );
+    return department ? department.name : "Nome não encontrado";
 };
 
 const openDelete = (item) => {
@@ -75,6 +83,10 @@ const page = ref(1);
 const pageCount = computed(() => {
     return Math.ceil(props.protocols.length / itemsPerPage.value);
 });
+
+{
+    console.log(props.departments);
+}
 </script>
 
 <template>
@@ -127,8 +139,11 @@ const pageCount = computed(() => {
                                 <td>{{ item.deadline_days }}</td>
                                 <td>
                                     {{
-                                        getNameContributor(item.contributor_id)
+                                        getContributorName(item.contributor_id)
                                     }}
+                                </td>
+                                <td>
+                                    {{ getDepartmentName(item.department_id) }}
                                 </td>
                                 <td class="d-flex align-center ga-2">
                                     <Link

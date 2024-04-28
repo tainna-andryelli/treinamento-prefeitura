@@ -10,6 +10,7 @@ import axios from "axios";
 const props = defineProps({
     protocol: Object,
     people: Object,
+    departments: Object,
     files: Object,
 });
 
@@ -30,8 +31,7 @@ const form = useForm("put", route("protocols.update", props.protocol.number), {
     created_date: props.protocol.created_date,
     deadline_days: props.protocol.deadline_days,
     contributor_id: props.protocol.contributor_id,
-    //files: Array.from(props.files),
-    //files: [],
+    department_id: props.protocol.department_id,
 });
 
 const formFiles = useForm(
@@ -208,6 +208,27 @@ const submit = () => {
                                         {{ form.errors.contributor_id }}
                                     </span>
                                 </v-col>
+                            </v-row>
+                            <v-row>
+                                <v-col>
+                                    <v-select
+                                        v-model="form.department_id"
+                                        label="Departamento:*"
+                                        variant="outlined"
+                                        :item-props="itemProps"
+                                        :items="props.departments"
+                                        item-value="id"
+                                        item-text="name"
+                                        @change="form.validate('department_id')"
+                                    ></v-select>
+                                    <span
+                                        v-if="form.invalid('department_id')"
+                                        class="text-base text-red-500"
+                                    >
+                                        {{ form.errors.department_id }}
+                                    </span>
+                                </v-col>
+                                <v-col></v-col>
                             </v-row>
                             <v-row>
                                 <v-col>
