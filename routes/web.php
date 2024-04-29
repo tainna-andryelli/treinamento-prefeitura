@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccessController;
+use App\Http\Controllers\AccompanimentController;
 use App\Http\Controllers\DepartmentsController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
@@ -64,3 +65,5 @@ Route::put('/departamentos/departamento-{id}', [DepartmentsController::class, 'u
 Route::post('/departamentos/departamento-{id}', [AccessController::class, 'store'])->name('access.store')->middleware([HandlePrecognitiveRequests::class]);
 Route::delete('/departamentos/departamento-{departmentId}/usuario-{userId}', [AccessController::class, 'destroy'])->name('access.destroy')->middleware([HandlePrecognitiveRequests::class]);
 
+//Accompaniments
+Route::post('/protocolos/protocolo-{id}/acompanhamento', [AccompanimentController::class, 'store'])->name('accompaniment.store')->middleware([HandlePrecognitiveRequests::class]);

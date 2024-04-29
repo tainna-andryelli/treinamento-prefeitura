@@ -17,6 +17,7 @@ class Protocols extends Model
         'deadline_days',
         'contributor_id',
         'department_id',
+        'status',
     ];
 
     public function contributor()
@@ -31,6 +32,13 @@ class Protocols extends Model
 
     public function department()
     {
-        return $this->belongsTo(Departments::class);
+        return $this->belongsTo(Departments::class, 'department_id');
     }
+
+    public function accompaniments()
+    {
+        return $this->hasMany(Accompaniment::class, 'protocol_number', 'number');
+    }
+
+
 }

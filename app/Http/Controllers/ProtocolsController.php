@@ -9,6 +9,7 @@ use App\Models\People;
 use App\Models\Departments;
 use App\Models\AttachedFile;
 use App\Models\Access;
+use App\Models\Accompaniment;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,7 @@ class ProtocolsController extends Controller
         $protocol = Protocols::find($number);
         $people = People::select('id', 'name')->get();
         $files = AttachedFile::where('protocol_number', $number)->get();
+        $accompaniments = Accompaniment::where('protocol_number', $number)->orderBy('created_at', 'desc')->get();
 
         $userAuth = Auth::user();
         if($userAuth->profile === 'A') {
@@ -91,7 +93,7 @@ class ProtocolsController extends Controller
         } else{
             $departments = Departments::select('id', 'name')->get();
         }
-        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people, 'files' => $files, 'departments' => $departments]); 
+        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people, 'files' => $files, 'departments' => $departments, 'accompaniments' => $accompaniments]); 
     }
 
     public function update(ProtocolsRequest $request, string $number)
@@ -104,6 +106,7 @@ class ProtocolsController extends Controller
             'deadline_days' => $request->deadline_days,
             'contributor_id' => $request->contributor_id,
             'department_id' => $request->department_id,
+            'status' => $request->status,
         ];
 
         $protocol->update($data);

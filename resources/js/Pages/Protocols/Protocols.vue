@@ -25,6 +25,7 @@ const headers = [
     { title: "Prazo (em dias)", value: "deadline_days" },
     { title: "Contribuinte", value: "contributor_id" },
     { title: "Departamento", value: "department_id" },
+    { title: "Situação", value: "status" },
     { title: "Ações", sortable: false },
 ];
 
@@ -38,6 +39,20 @@ const getDepartmentName = (departmentId) => {
         (department) => department.id === departmentId
     );
     return department ? department.name : "Nome não encontrado";
+};
+
+const statusColor = ref();
+const showStatus = (status) => {
+    if (status === "E") {
+        statusColor.value = "yellow";
+        return "Em atendimento";
+    } else if (status === "S") {
+        statusColor.value = "green";
+        return "Solucionado";
+    }
+
+    statusColor.value = "red";
+    return "Aberto";
 };
 
 const openDelete = (item) => {
@@ -83,10 +98,6 @@ const page = ref(1);
 const pageCount = computed(() => {
     return Math.ceil(props.protocols.length / itemsPerPage.value);
 });
-
-{
-    console.log(props.departments);
-}
 </script>
 
 <template>
@@ -144,6 +155,18 @@ const pageCount = computed(() => {
                                 </td>
                                 <td>
                                     {{ getDepartmentName(item.department_id) }}
+                                </td>
+                                <td>
+                                    <div
+                                        class="d-flex flex-row align-center gap-2"
+                                    >
+                                        <v-icon
+                                            :color="statusColor"
+                                            icon="mdi-circle"
+                                            size="medium"
+                                        ></v-icon>
+                                        {{ showStatus(item.status) }}
+                                    </div>
                                 </td>
                                 <td class="d-flex align-center ga-2">
                                     <Link
