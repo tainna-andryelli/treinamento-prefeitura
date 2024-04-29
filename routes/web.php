@@ -7,6 +7,7 @@ use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuditsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
@@ -72,3 +73,7 @@ Route::post('/protocolos/protocolo-{id}/acompanhamento', [AccompanimentControlle
 //PDFs
 Route::get('/pdf/protocolos', [PdfController::class, 'generateAllProtocolsPdf'])->name('pdf.protocols');
 Route::get('/pdf/protocolos/{number}', [PdfController::class, 'generateSpecificProtocolPdf'])->name('pdf.protocol');
+
+//Audits
+Route::get('/auditoria', [AuditsController::class, 'index'])->name('audits.index');
+Route::get('/auditoria/audit-{id}', [AuditsController::class, 'show'])->name('audits.show');

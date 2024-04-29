@@ -47,8 +47,14 @@ const logout = () => {
             </Link>
             <Link :href="route('departments.index')">
                 <v-list-item
-                    prepend-icon="mdi-badge-account-horizontal-outline"
+                    prepend-icon="mdi-forum"
                     title="Departamentos"
+                ></v-list-item>
+            </Link>
+            <Link :href="route('audits.index')">
+                <v-list-item
+                    prepend-icon="mdi-folder-lock-outline"
+                    title="Auditoria"
                 ></v-list-item>
             </Link>
             <v-list-item
