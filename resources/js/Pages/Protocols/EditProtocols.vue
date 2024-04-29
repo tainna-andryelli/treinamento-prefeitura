@@ -236,9 +236,25 @@ const formatCreatedAt = (created_at) => {
                         >
                     </v-tabs>
                     <v-card flat v-if="tab === 0">
-                        <v-card-title class="text-h4 my-8"
-                            >Visualizar Protocolo</v-card-title
-                        >
+                        <div class="d-flex align-center justify-between">
+                            <v-card-title class="text-h4 my-8"
+                                >Visualizar Protocolo</v-card-title
+                            >
+                            <a
+                                :href="
+                                    '/pdf/protocolos/' + props.protocol.number
+                                "
+                                class="btn btn-primary mr-8 text-blue-600"
+                            >
+                                <v-icon
+                                    color="blue-600"
+                                    icon="mdi-download"
+                                    size="large"
+                                    class="mr-1"
+                                ></v-icon>
+                                <span>PDF</span></a
+                            >
+                        </div>
                         <v-card-text>
                             <form @submit.prevent="submit">
                                 <v-row>

@@ -3,6 +3,7 @@
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\AccompanimentController;
 use App\Http\Controllers\DepartmentsController;
+use App\Http\Controllers\PdfController;
 use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
 use App\Http\Controllers\UserController;
@@ -67,3 +68,7 @@ Route::delete('/departamentos/departamento-{departmentId}/usuario-{userId}', [Ac
 
 //Accompaniments
 Route::post('/protocolos/protocolo-{id}/acompanhamento', [AccompanimentController::class, 'store'])->name('accompaniment.store')->middleware([HandlePrecognitiveRequests::class]);
+
+//PDFs
+Route::get('/pdf/protocolos', [PdfController::class, 'generateAllProtocolsPdf'])->name('pdf.protocols');
+Route::get('/pdf/protocolos/{number}', [PdfController::class, 'generateSpecificProtocolPdf'])->name('pdf.protocol');

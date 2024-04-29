@@ -41,18 +41,22 @@ const getDepartmentName = (departmentId) => {
     return department ? department.name : "Nome não encontrado";
 };
 
-const statusColor = ref();
 const showStatus = (status) => {
     if (status === "E") {
-        statusColor.value = "yellow";
         return "Em atendimento";
     } else if (status === "S") {
-        statusColor.value = "green";
         return "Solucionado";
     }
-
-    statusColor.value = "red";
     return "Aberto";
+};
+
+const statusColor = (status) => {
+    if (status === "E") {
+        return "yellow";
+    } else if (status === "S") {
+        return "green";
+    }
+    return "red";
 };
 
 const openDelete = (item) => {
@@ -141,6 +145,7 @@ const pageCount = computed(() => {
                         :items="protocols"
                         :items-per-page="itemsPerPage"
                         :search="search"
+                        class="mb-8"
                     >
                         <template v-slot:item="{ item }">
                             <tr>
@@ -161,7 +166,7 @@ const pageCount = computed(() => {
                                         class="d-flex flex-row align-center gap-2"
                                     >
                                         <v-icon
-                                            :color="statusColor"
+                                            :color="statusColor(item.status)"
                                             icon="mdi-circle"
                                             size="medium"
                                         ></v-icon>
@@ -200,6 +205,18 @@ const pageCount = computed(() => {
                             </tr>
                         </template>
                     </v-data-table>
+                    <a
+                        :href="'/pdf/protocolos/'"
+                        class="btn btn-primary text-blue-600"
+                    >
+                        <v-icon
+                            color="blue-600"
+                            icon="mdi-download"
+                            size="large"
+                            class="mr-1"
+                        ></v-icon>
+                        <span>PDF</span></a
+                    >
                     <v-pagination
                         v-model="page"
                         :length="pageCount"
