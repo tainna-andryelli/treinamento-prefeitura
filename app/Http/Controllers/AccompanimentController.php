@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Accompaniment;
 use Illuminate\Http\Request;
+use App\Http\Requests\AccompanimentRequest;
 
 class AccompanimentController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(AccompanimentRequest $request)
     {
-        $validatedData = $request->validate([
-            'description' => 'required|string',
-            'status' => 'required|in:A,E,S',
-            'protocol_number' => 'required|numeric',
-        ]);
+        $data = [
+            'description' => $request->description,
+            'status' => $request->status,
+            'protocol_number' => $request->protocol_number,
+        ];
     
-        Accompaniment::create($validatedData);
+        Accompaniment::create($data);
     }
 
     public function edit(Accompaniment $accompaniment)

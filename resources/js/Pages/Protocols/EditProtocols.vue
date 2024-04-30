@@ -164,7 +164,7 @@ const headers = [
     { title: "#", align: "left", value: "id" },
     { title: "Descrição", value: "description" },
     { title: "Situação", value: "status" },
-    { title: "Data de criação:", value: "created_at" },
+    { title: "Data e Hora de criação:", value: "created_at" },
 ];
 
 const accompanimentStatus = ref(null);
@@ -180,7 +180,6 @@ const formAccompaniment = useForm(
 
 const submitAccompaniment = () => {
     formAccompaniment.status = statusBD(accompanimentStatus.value);
-    console.log(formAccompaniment);
     formAccompaniment.submit({
         preserveScroll: true,
         onSuccess: () => {
@@ -228,23 +227,23 @@ const formatCreatedAt = (created_at) => {
                 <span>Atende Cidadão > Protocolos > Visualizar</span>
                 <v-card class="mt-8 pa-4">
                     <v-tabs v-model="tab" align-tabs="start">
-                        <v-tab @click="changeTab(0)" class="text-blue-darken-2"
+                        <v-tab @click="changeTab(0)" class="text-blue"
                             >Protocolo</v-tab
                         >
-                        <v-tab @click="changeTab(1)" class="text-blue-darken-2"
+                        <v-tab @click="changeTab(1)" class="text-blue"
                             >Acompanhamentos</v-tab
                         >
                     </v-tabs>
                     <v-card flat v-if="tab === 0">
                         <div class="d-flex align-center justify-between">
-                            <v-card-title class="text-h4 my-8"
+                            <v-card-title class="text-h4 my-12"
                                 >Visualizar Protocolo</v-card-title
                             >
                             <a
                                 :href="
                                     '/pdf/protocolos/' + props.protocol.number
                                 "
-                                class="btn btn-primary mr-8 text-blue-600"
+                                class="btn btn-primary mr-8 text-blue"
                             >
                                 <v-icon
                                     color="blue-600"
@@ -436,6 +435,7 @@ const formatCreatedAt = (created_at) => {
                                                     </v-btn>
                                                     <a id="downloadLink">
                                                         <v-btn
+                                                            rounded="xs"
                                                             class="text-base ml-2 text-white"
                                                             color="blue-lighten-1"
                                                             @click="
@@ -481,6 +481,7 @@ const formatCreatedAt = (created_at) => {
                                                         </v-btn>
                                                         <a id="downloadLink">
                                                             <v-btn
+                                                                rounded="xs"
                                                                 class="text-base ml-2"
                                                                 color="green-lighten-1"
                                                                 @click="
@@ -531,103 +532,128 @@ const formatCreatedAt = (created_at) => {
                         </v-card-text>
                     </v-card>
                     <v-card flat v-if="tab === 1">
-                        <v-card-title class="text-h4 my-8"
-                            >Acompanhamentos</v-card-title
+                        <v-card-title class="text-h4 my-12"
+                            >Registro de Acompanhamento</v-card-title
                         >
-                        <form @submit.prevent="submit">
-                            <v-row>
-                                <v-col>
-                                    <v-text-field
-                                        v-model="formAccompaniment.description"
-                                        label="Descrição:*"
-                                        variant="outlined"
-                                        @change="
-                                            formAccompaniment.validate(
-                                                'description'
-                                            )
-                                        "
-                                    ></v-text-field>
-                                    <span
-                                        v-if="
-                                            formAccompaniment.invalid(
-                                                'description'
-                                            )
-                                        "
-                                        class="text-base text-red-500"
-                                    >
-                                        {{
-                                            formAccompaniment.errors.description
-                                        }}
-                                    </span>
-                                </v-col>
-                                <v-col>
-                                    <v-select
-                                        v-model="accompanimentStatus"
-                                        label="Situação:*"
-                                        :items="[
-                                            'Aberto',
-                                            'Em atendimento',
-                                            'Solucionado',
-                                        ]"
-                                        variant="outlined"
-                                        @change="
-                                            formAccompaniment.validate('status')
-                                        "
-                                    ></v-select>
-                                </v-col>
-                            </v-row>
-                            <v-row>
-                                <v-col>
-                                    <v-card-actions class="justify-end ga-6">
-                                        <v-btn
-                                            rounded="xs"
-                                            color="blue-darken-2"
-                                            size="large"
-                                            variant="tonal"
-                                            @click="submitAccompaniment"
-                                            >Salvar</v-btn
+                        <v-card-text>
+                            <form @submit.prevent="submit">
+                                <v-row>
+                                    <v-col>
+                                        <v-text-field
+                                            v-model="
+                                                formAccompaniment.description
+                                            "
+                                            label="Descrição:*"
+                                            variant="outlined"
+                                            @change="
+                                                formAccompaniment.validate(
+                                                    'description'
+                                                )
+                                            "
+                                        ></v-text-field>
+                                        <span
+                                            v-if="
+                                                formAccompaniment.invalid(
+                                                    'description'
+                                                )
+                                            "
+                                            class="text-base text-red-500"
                                         >
-                                    </v-card-actions>
-                                </v-col>
-                            </v-row>
-                        </form>
+                                            {{
+                                                formAccompaniment.errors
+                                                    .description
+                                            }}
+                                        </span>
+                                    </v-col>
+                                    <v-col>
+                                        <v-select
+                                            v-model="accompanimentStatus"
+                                            label="Situação:"
+                                            :items="[
+                                                'Aberto',
+                                                'Em atendimento',
+                                                'Solucionado',
+                                            ]"
+                                            variant="outlined"
+                                            @change="
+                                                formAccompaniment.validate(
+                                                    'status'
+                                                )
+                                            "
+                                        ></v-select>
+                                    </v-col>
+                                </v-row>
+                                <v-row>
+                                    <v-col>
+                                        <v-card-actions
+                                            class="justify-end ga-6"
+                                        >
+                                            <v-btn
+                                                rounded="xs"
+                                                color="blue"
+                                                size="large"
+                                                variant="tonal"
+                                                @click="submitAccompaniment"
+                                                >Salvar</v-btn
+                                            >
+                                        </v-card-actions>
+                                    </v-col>
+                                </v-row>
+                            </form>
 
-                        <v-data-table
-                            v-model:page="page"
-                            :headers="headers"
-                            :items="accompaniments"
-                            :items-per-page="itemsPerPage"
-                            :search="search"
-                        >
-                            <template v-slot:item="{ item }">
-                                <tr>
-                                    <td>{{ item.id }}</td>
-                                    <td>{{ item.description }}</td>
-                                    <td>
-                                        <div
-                                            class="d-flex flex-row align-center gap-2"
-                                        >
-                                            <v-icon
-                                                :color="
-                                                    statusColor(item.status)
-                                                "
-                                                icon="mdi-circle"
-                                                size="medium"
-                                            ></v-icon>
-                                            {{ statusInterface(item.status) }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        {{ formatCreatedAt(item.created_at) }}
-                                    </td>
-                                </tr>
-                            </template>
-                        </v-data-table>
-                        <v-pagination
-                            v-model="page"
-                            :length="pageCount"
-                            class="text-light-blue-darken-2 mt-8"
-                        ></v-pagination>
+                            <div>
+                                <v-card-title class="text-h6 mt-12 pa-2"
+                                    >Acompanhamentos Realizados:</v-card-title
+                                >
+                                <v-data-table
+                                    v-model:page="page"
+                                    :headers="headers"
+                                    :items="accompaniments"
+                                    :items-per-page="itemsPerPage"
+                                    :search="search"
+                                >
+                                    <template v-slot:item="{ item }">
+                                        <tr>
+                                            <td>{{ item.id }}</td>
+                                            <td>{{ item.description }}</td>
+                                            <td>
+                                                <div
+                                                    class="d-flex flex-row align-center gap-2"
+                                                >
+                                                    <v-icon
+                                                        :color="
+                                                            statusColor(
+                                                                item.status
+                                                            )
+                                                        "
+                                                        icon="mdi-circle"
+                                                        size="medium"
+                                                    ></v-icon>
+                                                    {{
+                                                        statusInterface(
+                                                            item.status
+                                                        )
+                                                    }}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                {{
+                                                    formatCreatedAt(
+                                                        item.created_at
+                                                    )
+                                                }}
+                                            </td>
+                                        </tr>
+                                    </template>
+                                </v-data-table>
+                            </div>
+
+                            <v-pagination
+                                v-model="page"
+                                :length="pageCount"
+                                class="text-light-blue-darken-2 mt-8"
+                            ></v-pagination>
+                        </v-card-text>
                     </v-card>
                 </v-card>
             </v-container>
@@ -668,5 +694,9 @@ const formatCreatedAt = (created_at) => {
 <style>
 .v-data-table-footer {
     display: none;
+}
+
+.v-slide-group__content button {
+    color: #2196f3 !important;
 }
 </style>
