@@ -21,7 +21,7 @@ class ProtocolsController extends Controller
     {
         $userAuth = Auth::user();
         
-        if($userAuth->profile === 'A'){
+        if($userAuth && $userAuth->profile === 'A'){
             $access = Access::where('user_id', $userAuth->id )->pluck('department_id')->toArray();
             $protocols = Protocols::whereIn('department_id', $access)->get();
             $departments = Departments::whereIn('id', $access)->get();
@@ -39,7 +39,7 @@ class ProtocolsController extends Controller
     {
         $userAuth = Auth::user();
 
-        if ($userAuth->profile === 'A') {
+        if ($userAuth && $userAuth->profile === 'A') {
             $access = Access::where('user_id', $userAuth->id)->pluck('department_id')->toArray();
             $departments = Departments::whereIn('id', $access)->select('id', 'name')->get();
         } else {
@@ -65,7 +65,7 @@ class ProtocolsController extends Controller
         
         if ($protocol && $request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName(); //garante filenames únicos
+                $filename = time() . '_' . $file->getClientOriginalName(); //guarantees unique filenames
                 $storagePath = $file->storeAs('protocols', $filename);
 
                 AttachedFile::create([
@@ -113,7 +113,7 @@ class ProtocolsController extends Controller
 
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName(); //garante filenames únicos
+                $filename = time() . '_' . $file->getClientOriginalName(); //guarantees unique filenames
                 $storagePath = $file->storeAs('protocols', $filename);
 
                 AttachedFile::create([

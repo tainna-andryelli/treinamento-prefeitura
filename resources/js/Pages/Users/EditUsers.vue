@@ -12,7 +12,8 @@ const props = defineProps({
 
 //Editável para Admin do Sistema se o usuário a ser editado for Atendente
 const isEditable = ref(
-    props.userAuth.profile === "S" && props.user.profile === "A"
+    (props.userAuth.profile === "S" && props.user.profile === "A") ||
+        props.userAuth.profile === "T"
 );
 
 const form = useForm("put", route("user.update", props.user.id), {
