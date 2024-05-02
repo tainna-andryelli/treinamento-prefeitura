@@ -31,9 +31,11 @@ const headers = [
 ];
 
 const deadlineDate = (item) => {
-    console.log(item);
     const createDate = new Date(item.created_date);
     const deadlineDays = item.deadline_days;
+
+    createDate.setDate(createDate.getDate() + 1);
+
     const deadlineDate = new Date(
         createDate.getTime() + deadlineDays * 24 * 60 * 60 * 1000
     );
