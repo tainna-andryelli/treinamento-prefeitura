@@ -34,7 +34,7 @@ class DepartmentsController extends Controller
     {
         $department = Departments::find($id);
 
-        $users = User::all();
+        $users = User::where('active', 'S')->get();
 
         $access = Access::where('department_id', $id)->get();
         $usersInAccess = $access->pluck('user_id')->unique()->toArray();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Access;
 use App\Http\Requests\UserRequest;
 use Inertia\Inertia;
 use App\Models\User;
@@ -60,6 +61,10 @@ class UserController extends Controller
                 'profile' => $request->profile,
                 'active' => $request->active,
             ];
+
+            if($request->active === 'N'){
+                Access::where('user_id', $id)->delete();
+            }
     
             $user->update($validatedData);
         }
