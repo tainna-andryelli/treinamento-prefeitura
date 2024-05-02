@@ -19,15 +19,26 @@ const protocol = ref(null);
 const search = ref("");
 
 const headers = [
-    { title: "Número", align: "left", value: "number" },
+    { title: "Nº", align: "left", value: "number" },
     { title: "Descrição", value: "description" },
-    { title: "Data de Criação", value: "create_date" },
-    { title: "Prazo (em dias)", value: "deadline_days" },
+    { title: "Data", value: "created_date" },
+    { title: "Data Limite" },
+    { title: "Prazo (dias)", value: "deadline_days" },
     { title: "Contribuinte", value: "contributor_id" },
     { title: "Departamento", value: "department_id" },
     { title: "Situação", value: "status" },
     { title: "Ações", sortable: false },
 ];
+
+const deadlineDate = (item) => {
+    console.log(item);
+    const createDate = new Date(item.created_date);
+    const deadlineDays = item.deadline_days;
+    const deadlineDate = new Date(
+        createDate.getTime() + deadlineDays * 24 * 60 * 60 * 1000
+    );
+    return deadlineDate.toLocaleDateString();
+};
 
 const getContributorName = (personId) => {
     const contributor = props.people.find((person) => person.id === personId);
@@ -88,7 +99,7 @@ const deleteItem = () => {
     });
 };
 
-const formatDate = (date) => {
+const formattedDate = (date) => {
     //date: yyyy-MM-dd
     const year = date.slice(0, 4);
     const mounth = date.slice(5, 7);
@@ -151,7 +162,8 @@ const pageCount = computed(() => {
                             <tr>
                                 <td>{{ item.number }}</td>
                                 <td>{{ item.description }}</td>
-                                <td>{{ formatDate(item.created_date) }}</td>
+                                <td>{{ formattedDate(item.created_date) }}</td>
+                                <td>{{ deadlineDate(item) }}</td>
                                 <td>{{ item.deadline_days }}</td>
                                 <td>
                                     {{
@@ -255,9 +267,3 @@ const pageCount = computed(() => {
         </v-dialog>
     </v-app>
 </template>
-
-<style>
-.v-data-table-footer {
-    display: none;
-}
-</style>
