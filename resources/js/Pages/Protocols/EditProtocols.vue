@@ -514,12 +514,3 @@ const submit = () => {
         </v-dialog>
     </v-app>
 </template>
-<style>
-.v-data-table-footer {
-    display: none;
-}
-
-.v-slide-group__content button {
-    color: #2196f3 !important;
-}
-</style>

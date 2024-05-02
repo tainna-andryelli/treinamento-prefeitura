@@ -176,9 +176,3 @@ const pageCount = computed(() => {
         </v-dialog>
     </v-app>
 </template>
-
-<style>
-.v-data-table-footer {
-    display: none;
-}
-</style>
