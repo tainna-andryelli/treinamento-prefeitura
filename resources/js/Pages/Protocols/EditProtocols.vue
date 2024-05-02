@@ -588,6 +588,17 @@ const formatCreatedAt = (created_at) => {
                                         <v-card-actions
                                             class="justify-end ga-6"
                                         >
+                                            <Link
+                                                :href="route('protocols.index')"
+                                            >
+                                                <v-btn
+                                                    rounded="xs"
+                                                    color="grey-darken-1"
+                                                    size="large"
+                                                    variant="tonal"
+                                                    >Voltar</v-btn
+                                                >
+                                            </Link>
                                             <v-btn
                                                 rounded="xs"
                                                 color="blue"

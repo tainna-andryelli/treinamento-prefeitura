@@ -68,7 +68,7 @@ Route::post('/departamentos/departamento-{id}', [AccessController::class, 'store
 Route::delete('/departamentos/departamento-{departmentId}/usuario-{userId}', [AccessController::class, 'destroy'])->name('access.destroy')->middleware([HandlePrecognitiveRequests::class]);
 
 //Accompaniments
-Route::post('/protocolos/protocolo-{id}/acompanhamento', [AccompanimentController::class, 'store'])->name('accompaniment.store')->middleware([HandlePrecognitiveRequests::class]);
+Route::post('/protocolos/protocolo-{number}/acompanhamento', [AccompanimentController::class, 'store'])->name('accompaniment.store')->middleware([HandlePrecognitiveRequests::class]);
 
 //PDFs
 Route::get('/pdf/protocolos', [PdfController::class, 'generateAllProtocolsPdf'])->name('pdf.protocols');
