@@ -35,6 +35,13 @@ import { Link } from "@inertiajs/vue3";
                         >aqui</Link
                     >.
                 </p>
+                <p>
+                    Confira a <strong>Auditoria</strong> para acompanhar cada
+                    alteração feita no sistema clicando
+                    <Link :href="route('audits.index')" class="text-blue"
+                        >aqui</Link
+                    >.
+                </p>
             </v-container>
         </v-main>
     </v-app>

@@ -145,7 +145,7 @@ const pageCount = computed(() => {
                     <v-card-title class="pa-0 mb-8">
                         <v-text-field
                             v-model="search"
-                            label="Buscar Pessoa"
+                            label="Buscar Protocolo"
                             prepend-inner-icon="mdi-magnify"
                             single-line
                             variant="outlined"

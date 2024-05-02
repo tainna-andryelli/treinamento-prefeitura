@@ -44,11 +44,6 @@ const submit = () => {
                 src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Bras%C3%A3o_de_S%C3%A3o_Leopoldo_-_RS.svg"
             />
         </div>
-
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-
         <form @submit.prevent="submit" class="pa-4">
             <div>
                 <InputLabel for="email" value="Email" />
@@ -80,19 +75,13 @@ const submit = () => {
             <div class="block mt-4">
                 <label class="flex items-center">
                     <Checkbox v-model:checked="form.remember" name="remember" />
-                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
+                    <span class="ms-2 text-sm text-gray-600"
+                        >Lembre de mim</span
+                    >
                 </label>
             </div>
 
-            <div class="flex items-center justify-end mt-4">
-                <Link
-                    v-if="canResetPassword"
-                    :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    Esqueceu sua senha?
-                </Link>
-
+            <div class="flex items-center justify-center mt-8">
                 <PrimaryButton
                     class="ms-4"
                     :class="{ 'opacity-25': form.processing }"

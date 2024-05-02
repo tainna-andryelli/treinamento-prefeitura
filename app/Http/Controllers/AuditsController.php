@@ -11,7 +11,7 @@ class AuditsController extends Controller
 {
     public function index()
     {
-        $audits = Audit::all();
+        $audits = Audit::orderBy('created_at', 'desc')->get();
         $users = User::all();
         return Inertia::render('Audits/Audits', ['audits' => $audits, 'users' => $users]);
     }

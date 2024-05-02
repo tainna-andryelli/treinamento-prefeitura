@@ -57,10 +57,6 @@ const logout = () => {
                     title="Auditoria"
                 ></v-list-item>
             </Link>
-            <v-list-item
-                prepend-icon="mdi-cog-outline"
-                title="Configurações"
-            ></v-list-item>
         </v-list>
     </v-navigation-drawer>
     <v-app-bar flat color="blue">
