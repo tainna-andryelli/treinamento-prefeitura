@@ -15,7 +15,7 @@ class ProtocolsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'description' => 'required',
+            'description' => 'required|string|max:2000',
             'created_date' => 'required|date',
             'deadline_days' => 'required|numeric|between:5,30',
             'contributor_id' => ['required', 'exists:people,id', new ContributorAgeValidateRule],
@@ -30,6 +30,7 @@ class ProtocolsRequest extends FormRequest
     {
         return [
             'description.required' => 'A descrição é obrigatória.',
+            'description.max' => 'A descrição não pode ter mais de 2000 caracteres.',
             'created_date.required' => 'Especifique a data de criação.',
             'deadline_days.required' => 'O prazo é obrigatório.',
             'deadline_days.numeric' => 'O prazo deve ser um número.',
