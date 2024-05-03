@@ -59,6 +59,7 @@ class ProtocolsController extends Controller
             'deadline_days' => $request->deadline_days,
             'contributor_id' => $request->contributor_id,
             'department_id' => $request->department_id,
+            'status' => $request->status,
         ];
 
         $protocol = Protocols::create($data);

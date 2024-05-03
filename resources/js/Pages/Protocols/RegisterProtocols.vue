@@ -26,6 +26,7 @@ const form = useForm("post", route("protocols.store"), {
     deadline_days: "",
     contributor_id: null,
     department_id: null,
+    status: "A",
     files: [],
 });
 
