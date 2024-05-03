@@ -1,6 +1,6 @@
 # 📄 Atende Cidadão
 
-Este projeto de treinamento consiste no aprimorando, novas tecnologias e funcionalidades, do projeto de Atendimento ao Contribuinte da prefeitura de uma cidade.
+Este projeto de treinamento consiste no aprimoramento, novas tecnologias e funcionalidades, do projeto de Atendimento ao Contribuinte da prefeitura de uma cidade.
 
 ## 💻 Tecnologias Utilizadas:
 
