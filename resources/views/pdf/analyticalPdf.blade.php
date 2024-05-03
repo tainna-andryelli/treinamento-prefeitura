@@ -58,7 +58,7 @@
                     </tr>
                     <tr>
                         <td><strong>Contribuinte:</strong> {{ $contributor->name }}</td>
-                        <td><strong>Data Limite:</strong> {{ $deadline_date }}</td>
+                        <td><strong>Data Limite:</strong> {{ date('d/m/Y', strtotime($deadline_date)) }}</td>
                     </tr>
                     <tr>
                         <td><strong>Departamento:</strong> {{ $department->name }}</td>
