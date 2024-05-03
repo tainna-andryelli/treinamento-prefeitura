@@ -44,6 +44,6 @@ class UserRequest extends FormRequest
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.unique' => 'Este CPF já foi registrado no sistema.',
             'profile.required' => 'O tipo de usuário é obrigatório.',
-        ];
+        ];  
     }
 }

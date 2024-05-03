@@ -34,7 +34,7 @@ class ProtocolsRequest extends FormRequest
             'created_date.required' => 'Especifique a data de criação.',
             'deadline_days.required' => 'O prazo é obrigatório.',
             'deadline_days.numeric' => 'O prazo deve ser um número.',
-            'deadline_days.between' => 'O prazo deve estar entre 5 e 30 dias.',
+            'deadline_days.between' => 'O prazo deve ser de 5 a 30 dias.',
             'contributor_id.required' => 'O contribuinte é obrigatório.',
             'contributor_id.exists' => 'O contribuinte selecionado não está cadastrado no sistema.',
             'department_id.required' => 'O departamento é obrigatório.',

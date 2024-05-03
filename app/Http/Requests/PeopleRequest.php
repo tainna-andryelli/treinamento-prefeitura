@@ -35,7 +35,7 @@ class PeopleRequest extends FormRequest
         return [
             'name.required' => 'O nome é obrigatório.',
             'name.min' => 'O nome deve ter no mínimo :min caracteres.',
-            'birthday.required' => 'Digite sua data de Nascimento.',
+            'birthday.required' => 'Digite a data de Nascimento.',
             'birthday.date' => 'A data de Nascimento deve ser uma data válida.',
             'cpf.required' => 'O CPF é obrigatório.',
             'cpf.unique' => 'CPF já cadastrado.',
