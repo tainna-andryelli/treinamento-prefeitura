@@ -131,18 +131,21 @@ const destroyAccess = () => {
                         <v-card-text>
                             <form @submit.prevent="submit">
                                 <v-row>
-                                    <v-text-field
-                                        v-model="form.name"
-                                        label="Nome do Departamento:*"
-                                        variant="outlined"
-                                        @change="form.validate('name')"
-                                    ></v-text-field>
-                                    <span
-                                        v-if="form.invalid('name')"
-                                        class="text-base text-red-500"
-                                    >
-                                        {{ form.errors.name }}
-                                    </span>
+                                    <v-col>
+                                        <v-text-field
+                                            v-model="form.name"
+                                            label="Nome do Departamento:*"
+                                            variant="outlined"
+                                            @change="form.validate('name')"
+                                        ></v-text-field>
+                                        <span
+                                            v-if="form.invalid('name')"
+                                            class="text-base text-red-500 d-block"
+                                        >
+                                            O nome do departamento é
+                                            obrigatório.
+                                        </span>
+                                    </v-col>
                                 </v-row>
 
                                 <v-row class="justify-end">
@@ -214,7 +217,7 @@ const destroyAccess = () => {
                                 thickness="3px"
                                 color="black"
                             />
-                            <div v-if="access" class="mt-4">
+                            <div v-if="access.length > 0" class="mt-4">
                                 <p class="font-bold text-h5 mb-4">
                                     Usuários com Acesso:
                                 </p>
