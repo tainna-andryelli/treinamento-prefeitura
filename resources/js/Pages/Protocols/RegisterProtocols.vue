@@ -9,6 +9,7 @@ import { Link } from "@inertiajs/vue3";
 const props = defineProps({
     people: Object,
     departments: Object,
+    userProfile: String,
 });
 
 const itemProps = (item) => {
@@ -61,7 +62,7 @@ const submit = () => {
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Procotolos > Cadastro</span>

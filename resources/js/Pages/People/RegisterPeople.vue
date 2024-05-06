@@ -4,6 +4,11 @@ import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 import Menu from "../../Components/Menu.vue";
 import { Link } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+
+const props = defineProps({
+    userProfile: String,
+});
 
 const form = useForm("post", route("people.store"), {
     name: "",
@@ -38,7 +43,7 @@ const submit = () =>
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Pessoas > Cadastro</span>

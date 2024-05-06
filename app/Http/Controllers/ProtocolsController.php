@@ -19,6 +19,7 @@ class ProtocolsController extends Controller
 {
     public function index()
     {
+        $userProfile = Auth::user()->profile;
         $userAuth = Auth::user();
         
         if($userAuth && $userAuth->profile === 'A'){
@@ -32,11 +33,12 @@ class ProtocolsController extends Controller
         
         $people = People::all();
 
-        return Inertia::render('Protocols/Protocols', ['protocols' => $protocols, 'people' => $people, 'departments' => $departments]);
+        return Inertia::render('Protocols/Protocols', ['protocols' => $protocols, 'people' => $people, 'departments' => $departments, 'userProfile' => $userProfile]);
     }
 
     public function create()
     {
+        $userProfile = Auth::user()->profile;
         $userAuth = Auth::user();
 
         if ($userAuth && $userAuth->profile === 'A') {
@@ -48,7 +50,7 @@ class ProtocolsController extends Controller
 
         $people = People::select('id', 'name')->get();
 
-        return Inertia::render('Protocols/RegisterProtocols', ['people' => $people, 'departments' => $departments]);
+        return Inertia::render('Protocols/RegisterProtocols', ['people' => $people, 'departments' => $departments, 'userProfile' => $userProfile]);
     }
 
     public function store(ProtocolsRequest $request)
@@ -82,6 +84,8 @@ class ProtocolsController extends Controller
 
     public function edit(string $number)
     {
+        $userProfile = Auth::user()->profile;
+
         $protocol = Protocols::find($number);
         $people = People::select('id', 'name')->get();
         $files = AttachedFile::where('protocol_number', $number)->get();
@@ -94,7 +98,7 @@ class ProtocolsController extends Controller
         } else{
             $departments = Departments::select('id', 'name')->get();
         }
-        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people, 'files' => $files, 'departments' => $departments, 'accompaniments' => $accompaniments]); 
+        return Inertia::render('Protocols/EditProtocols', ['protocol' => $protocol, 'people' => $people, 'files' => $files, 'departments' => $departments, 'accompaniments' => $accompaniments, 'userProfile' => $userProfile]); 
     }
 
     public function update(ProtocolsRequest $request, string $number)

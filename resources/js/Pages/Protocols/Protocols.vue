@@ -10,6 +10,7 @@ const props = defineProps({
     protocols: Object,
     people: Object,
     departments: Object,
+    userProfile: String,
 });
 
 const toast = useToast();
@@ -119,7 +120,7 @@ const pageCount = computed(() => {
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Protocolos</span>

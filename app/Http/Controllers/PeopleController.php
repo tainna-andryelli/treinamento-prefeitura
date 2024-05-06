@@ -5,18 +5,23 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PeopleRequest;
 use Inertia\Inertia;
 use App\Models\People;
+use Illuminate\Support\Facades\Auth;
 
 class PeopleController extends Controller
 {
     public function index()
     {
         $people = People::all();
-        return Inertia::render('People/People', ['people' => $people]);
+        $userProfile = Auth::user()->profile;
+        
+        return Inertia::render('People/People', ['people' => $people, 'userProfile' => $userProfile]);
     }
 
     public function create()
     {
-        return Inertia::render('People/RegisterPeople');
+        $userProfile = Auth::user()->profile;
+
+        return Inertia::render('People/RegisterPeople', ['userProfile' => $userProfile]);
     }
 
     public function store(PeopleRequest $request)
@@ -39,7 +44,9 @@ class PeopleController extends Controller
     public function edit(string $id)
     {
         $person = People::find($id);
-        return Inertia::render('People/EditPeople', ['person' => $person]);
+        $userProfile = Auth::user()->profile;
+
+        return Inertia::render('People/EditPeople', ['person' => $person, 'userProfile' => $userProfile]);
     }
 
     public function update(PeopleRequest $request, string $id)

@@ -8,6 +8,7 @@ import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
     person: Object,
+    userProfile: String,
 });
 
 const form = useForm("put", route("people.update", props.person.id), {
@@ -42,7 +43,7 @@ const submit = () =>
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Pessoas > Visualizar</span>

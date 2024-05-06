@@ -14,6 +14,7 @@ const props = defineProps({
     departments: Object,
     files: Object,
     accompaniments: Object,
+    userProfile: String,
 });
 
 const itemProps = (item) => {
@@ -163,7 +164,7 @@ const submit = () => {
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main class="bg-grey-lighten-4 mt-8">
             <v-container>
                 <span>Atende Cidadão > Protocolos > Visualizar</span>

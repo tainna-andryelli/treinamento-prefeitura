@@ -1,7 +1,11 @@
 <script setup>
-import { ref } from "vue";
+import { ref, defineProps } from "vue";
 import { Link } from "@inertiajs/vue3";
 import axios from "axios";
+
+const props = defineProps({
+    userProfile: String,
+});
 
 const isDrawerOpen = ref(false);
 const isSubmitting = ref(false);
@@ -39,24 +43,26 @@ const logout = () => {
                     title="Protocolos"
                 ></v-list-item>
             </Link>
-            <Link :href="route('user.index')">
-                <v-list-item
-                    prepend-icon="mdi-account-group-outline"
-                    title="Usuários"
-                ></v-list-item>
-            </Link>
-            <Link :href="route('departments.index')">
-                <v-list-item
-                    prepend-icon="mdi-forum"
-                    title="Departamentos"
-                ></v-list-item>
-            </Link>
-            <Link :href="route('audits.index')">
-                <v-list-item
-                    prepend-icon="mdi-folder-lock-outline"
-                    title="Auditoria"
-                ></v-list-item>
-            </Link>
+            <template v-if="userProfile != 'A'">
+                <Link :href="route('user.index')">
+                    <v-list-item
+                        prepend-icon="mdi-account-group-outline"
+                        title="Usuários"
+                    ></v-list-item>
+                </Link>
+                <Link :href="route('departments.index')">
+                    <v-list-item
+                        prepend-icon="mdi-forum"
+                        title="Departamentos"
+                    ></v-list-item>
+                </Link>
+                <Link :href="route('audits.index')">
+                    <v-list-item
+                        prepend-icon="mdi-folder-lock-outline"
+                        title="Auditoria"
+                    ></v-list-item>
+                </Link>
+            </template>
         </v-list>
     </v-navigation-drawer>
     <v-app-bar flat color="blue">

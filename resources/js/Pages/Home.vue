@@ -1,11 +1,16 @@
 <script setup>
 import Menu from "../Components/Menu.vue";
 import { Link } from "@inertiajs/vue3";
+import { defineProps } from "vue";
+
+const props = defineProps({
+    userProfile: String,
+});
 </script>
 
 <template>
     <v-app>
-        <Menu />
+        <Menu :userProfile="userProfile" />
         <v-main>
             <v-container class="d-flex flex-column ga-6">
                 <h1 class="text-h4 mt-6">Home</h1>
@@ -23,25 +28,29 @@ import { Link } from "@inertiajs/vue3";
                         >aqui</Link
                     >.
                 </p>
-                <p>
-                    Veja os <strong>Usuários</strong> clicando
-                    <Link :href="route('user.index')" class="text-blue"
-                        >aqui</Link
-                    >.
-                </p>
-                <p>
-                    Confira os <strong>Departamentos</strong> clicando
-                    <Link :href="route('departments.index')" class="text-blue"
-                        >aqui</Link
-                    >.
-                </p>
-                <p>
-                    Confira a <strong>Auditoria</strong> para acompanhar cada
-                    alteração feita no sistema clicando
-                    <Link :href="route('audits.index')" class="text-blue"
-                        >aqui</Link
-                    >.
-                </p>
+                <template v-if="userProfile != 'A'">
+                    <p>
+                        Veja os <strong>Usuários</strong> clicando
+                        <Link :href="route('user.index')" class="text-blue"
+                            >aqui</Link
+                        >.
+                    </p>
+                    <p>
+                        Confira os <strong>Departamentos</strong> clicando
+                        <Link
+                            :href="route('departments.index')"
+                            class="text-blue"
+                            >aqui</Link
+                        >.
+                    </p>
+                    <p>
+                        Confira a <strong>Auditoria</strong> para acompanhar
+                        cada alteração feita no sistema clicando
+                        <Link :href="route('audits.index')" class="text-blue"
+                            >aqui</Link
+                        >.
+                    </p>
+                </template>
             </v-container>
         </v-main>
     </v-app>

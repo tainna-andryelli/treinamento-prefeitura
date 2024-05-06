@@ -8,6 +8,7 @@ use App\Http\Controllers\PeopleController;
 use App\Http\Controllers\ProtocolsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuditsController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Http\Middleware\HandlePrecognitiveRequests;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,10 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/home', function () {
-        return Inertia::render('Home');
+        $userProfile = Auth::user()->profile;
+        return Inertia::render('Home', [
+            'userProfile' => $userProfile,
+        ]);
     })->name('home');
 });
 
