@@ -21,7 +21,6 @@ const search = ref("");
 
 const headers = [
     { title: "Nº", align: "left", value: "number" },
-    { title: "Descrição", value: "description" },
     { title: "Data", value: "created_date" },
     { title: "Data Limite" },
     { title: "Prazo (dias)", value: "deadline_days" },
@@ -164,7 +163,6 @@ const pageCount = computed(() => {
                         <template v-slot:item="{ item }">
                             <tr>
                                 <td>{{ item.number }}</td>
-                                <td>{{ item.description }}</td>
                                 <td>{{ formattedDate(item.created_date) }}</td>
                                 <td>{{ deadlineDate(item) }}</td>
                                 <td>{{ item.deadline_days }}</td>
