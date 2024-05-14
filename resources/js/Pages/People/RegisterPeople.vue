@@ -24,7 +24,8 @@ const form = useForm("post", route("people.store"), {
 
 const toast = useToast();
 
-const submit = () =>
+const submit = () => {
+    form.cpf = form.cpf.replace(/\D/g, ""); //remove the mask
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
@@ -39,6 +40,7 @@ const submit = () =>
             });
         },
     });
+};
 </script>
 
 <template>
