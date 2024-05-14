@@ -9,8 +9,6 @@ const props = defineProps({
     userAuth: Object,
 });
 
-const search = ref("");
-
 const headers = [
     { title: "#", align: "left", value: "id" },
     { title: "Nome", value: "name" },
@@ -22,13 +20,6 @@ const headers = [
 if (props.userAuth.profile !== "A") {
     headers.push({ title: "Ações", sortable: false });
 }
-
-//pagination
-const itemsPerPage = ref(10);
-const page = ref(1);
-const pageCount = computed(() => {
-    return Math.ceil(props.users.length / itemsPerPage.value);
-});
 
 const showProfile = (profile) => {
     if (profile === "T") {
@@ -46,6 +37,31 @@ const showStatus = (status) => {
     }
     return "Desativado";
 };
+
+//Search
+const search = ref("");
+const filteredUsers = computed(() => {
+    if (!search.value) return props.users;
+
+    const searchTerm = search.value.toLowerCase();
+
+    return props.users.filter((user) => {
+        return (
+            user.id.toString().includes(searchTerm) ||
+            user.name.toLowerCase().includes(searchTerm) ||
+            user.email.toLowerCase().includes(searchTerm) ||
+            showProfile(user.profile).toLowerCase().includes(searchTerm) ||
+            showStatus(user.active).toLowerCase().includes(searchTerm)
+        );
+    });
+});
+
+//pagination
+const itemsPerPage = ref(10);
+const page = ref(1);
+const pageCount = computed(() => {
+    return Math.ceil(props.users.length / itemsPerPage.value);
+});
 </script>
 
 <template>
@@ -90,9 +106,8 @@ const showStatus = (status) => {
                     <v-data-table
                         v-model:page="page"
                         :headers="headers"
-                        :items="users"
+                        :items="filteredUsers"
                         :items-per-page="itemsPerPage"
-                        :search="search"
                     >
                         <template v-slot:item="{ item }">
                             <tr>
