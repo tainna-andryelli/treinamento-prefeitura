@@ -16,7 +16,6 @@ const deleteForm = ref();
 
 const isDialogOpen = ref(false);
 const person = ref(null);
-const search = ref("");
 
 const headers = [
     { title: "#", align: "left", value: "id" },
@@ -64,6 +63,23 @@ const deleteItem = () => {
         },
     });
 };
+//Search
+const search = ref("");
+const filteredPeople = computed(() => {
+    if (!search.value) return props.people;
+
+    const searchTerm = search.value.toLowerCase();
+
+    return props.people.filter((person) => {
+        return (
+            person.id.toString().includes(searchTerm) ||
+            person.name.toLowerCase().includes(searchTerm) ||
+            formatCpf(person.cpf).toString().includes(searchTerm) ||
+            formatDate(person.birthday).toString().includes(searchTerm) ||
+            person.sex.toLowerCase().includes(searchTerm)
+        );
+    });
+});
 
 //pagination
 const itemsPerPage = ref(10);
@@ -112,9 +128,8 @@ const pageCount = computed(() => {
                     <v-data-table
                         v-model:page="page"
                         :headers="headers"
-                        :items="people"
+                        :items="filteredPeople"
                         :items-per-page="itemsPerPage"
-                        :search="search"
                     >
                         <template v-slot:item="{ item }">
                             <tr>
