@@ -17,7 +17,6 @@ const toast = useToast();
 const deleteForm = ref();
 const isDialogOpen = ref(false);
 const protocol = ref(null);
-const search = ref("");
 
 const headers = [
     { title: "Nº", align: "left", value: "number" },
@@ -109,11 +108,43 @@ const formattedDate = (date) => {
     return day + "/" + mounth + "/" + year;
 };
 
+//Search
+const search = ref("");
+const filteredProtocols = computed(() => {
+    if (!search.value) return props.protocols;
+
+    const searchTerm = search.value.toLowerCase();
+
+    return props.protocols.filter((protocol) => {
+        return (
+            protocol.number.toString().includes(searchTerm) ||
+            formattedDate(protocol.created_date)
+                .toString()
+                .includes(searchTerm) ||
+            deadlineDate(protocol).includes(searchTerm) ||
+            protocol.deadline_days.toString().includes(searchTerm) ||
+            getContributorName(protocol.contributor_id)
+                .toLowerCase()
+                .includes(searchTerm) ||
+            getDepartmentName(protocol.department_id)
+                .toLowerCase()
+                .includes(searchTerm) ||
+            showStatus(protocol.status).toLocaleLowerCase().includes(searchTerm)
+        );
+    });
+});
+
 //pagination
 const itemsPerPage = ref(10);
 const page = ref(1);
 const pageCount = computed(() => {
     return Math.ceil(props.protocols.length / itemsPerPage.value);
+});
+
+const paginatedProtocols = computed(() => {
+    const startIndex = (page.value - 1) * itemsPerPage.value;
+    const endIndex = startIndex + itemsPerPage.value;
+    return filteredProtocols.value.slice(startIndex, endIndex);
 });
 </script>
 
@@ -155,9 +186,8 @@ const pageCount = computed(() => {
                     <v-data-table
                         v-model:page="page"
                         :headers="headers"
-                        :items="protocols"
+                        :items="filteredProtocols"
                         :items-per-page="itemsPerPage"
-                        :search="search"
                         class="mb-8"
                     >
                         <template v-slot:item="{ item }">
