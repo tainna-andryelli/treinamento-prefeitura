@@ -38,6 +38,7 @@ const profile = (option) => {
 
 const submit = () => {
     form.profile = profile(selectedProfile.value);
+    form.cpf = form.cpf.replace(/\D/g, ""); //remove the mask
     form.submit({
         preserveScroll: true,
         onSuccess: () => {
