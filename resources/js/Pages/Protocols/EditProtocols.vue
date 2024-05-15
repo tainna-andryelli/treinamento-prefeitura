@@ -201,14 +201,14 @@ const submit = () => {
                             <form @submit.prevent="submit">
                                 <v-row>
                                     <v-col>
-                                        <v-text-field
+                                        <v-textarea
                                             v-model="form.description"
                                             label="Descrição:*"
                                             variant="outlined"
                                             @change="
                                                 form.validate('description')
                                             "
-                                        ></v-text-field>
+                                        ></v-textarea>
                                         <span
                                             v-if="form.invalid('description')"
                                             class="text-base text-red-500"
@@ -216,6 +216,8 @@ const submit = () => {
                                             {{ form.errors.description }}
                                         </span>
                                     </v-col>
+                                </v-row>
+                                <v-row>
                                     <v-col>
                                         <v-text-field
                                             v-model="form.created_date"
@@ -233,8 +235,6 @@ const submit = () => {
                                             {{ form.errors.created_date }}
                                         </span>
                                     </v-col>
-                                </v-row>
-                                <v-row>
                                     <v-col>
                                         <v-text-field
                                             v-model="form.deadline_days"
@@ -251,6 +251,8 @@ const submit = () => {
                                             {{ form.errors.deadline_days }}
                                         </span>
                                     </v-col>
+                                </v-row>
+                                <v-row>
                                     <v-col>
                                         <v-select
                                             v-model="form.contributor_id"
@@ -273,8 +275,6 @@ const submit = () => {
                                             {{ form.errors.contributor_id }}
                                         </span>
                                     </v-col>
-                                </v-row>
-                                <v-row>
                                     <v-col>
                                         <v-select
                                             v-model="form.department_id"
@@ -295,6 +295,8 @@ const submit = () => {
                                             {{ form.errors.department_id }}
                                         </span>
                                     </v-col>
+                                </v-row>
+                                <v-row>
                                     <v-col>
                                         <v-select
                                             v-model="selectedStatus"
@@ -308,6 +310,7 @@ const submit = () => {
                                             @change="form.validate('status')"
                                         ></v-select>
                                     </v-col>
+                                    <v-col></v-col>
                                 </v-row>
                                 <v-row>
                                     <v-col>
