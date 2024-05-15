@@ -60,10 +60,19 @@ const search = ref("");
 const filteredAudits = computed(() => {
     if (!search.value) return props.audits;
 
-    const searchTerm = search.value;
+    const searchTerm = search.value.toLowerCase();
 
-    return props.audits.filter(() => {
-        return "";
+    return props.audits.filter((audit) => {
+        return (
+            audit.id.toString().includes(searchTerm) ||
+            getUserName(audit.user_id).toLowerCase().includes(searchTerm) ||
+            showEvent(audit.event).toLowerCase().includes(searchTerm) ||
+            formatCreatedAt(audit.created_at).toString().includes(searchTerm) ||
+            getTableName(audit.auditable_type)
+                .toLowerCase()
+                .includes(searchTerm) ||
+            audit.auditable_id.toString().includes(searchTerm)
+        );
     });
 });
 
@@ -100,9 +109,8 @@ const pageCount = computed(() => {
                     <v-data-table
                         v-model:page="page"
                         :headers="headers"
-                        :items="audits"
+                        :items="filteredAudits"
                         :items-per-page="itemsPerPage"
-                        :search="search"
                         class="mb-8"
                     >
                         <template v-slot:item="{ item }">
