@@ -30,7 +30,7 @@ const showEvent = computed(() => {
     return "Não encontrado";
 });
 
-const newValues2 = computed(() => {
+const newValues = computed(() => {
     const newValuesAudit = props.audit.new_values;
 
     if (newValuesAudit === null || newValuesAudit.length == 0)
@@ -46,7 +46,7 @@ const newValues2 = computed(() => {
     return lines.join("\n");
 });
 
-const oldValues2 = computed(() => {
+const oldValues = computed(() => {
     const oldValuesAudit = props.audit.old_values;
 
     if (oldValuesAudit == null || oldValuesAudit.length == 0)
