@@ -1,7 +1,7 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import Menu from "../../Components/Menu.vue";
-import { defineProps, computed } from "vue";
+import { defineProps, computed, ref } from "vue";
 
 const props = defineProps({
     audit: Object,
@@ -28,6 +28,38 @@ const showEvent = computed(() => {
         return "Permanentemente excluído";
     }
     return "Não encontrado";
+});
+
+const newValues2 = computed(() => {
+    const newValuesAudit = props.audit.new_values;
+
+    if (newValuesAudit === null || newValuesAudit.length == 0)
+        return "Nenhum valor novo atribuído a essa ação.";
+
+    const jsonString = JSON.stringify(newValuesAudit, null, 2);
+    const trimmedString = jsonString.slice(1, -1);
+    const formattedString = trimmedString.replace(/,/g, "\n");
+    const lines = formattedString
+        .split("\n")
+        .filter((line) => line.trim() !== "");
+
+    return lines.join("\n");
+});
+
+const oldValues2 = computed(() => {
+    const oldValuesAudit = props.audit.old_values;
+
+    if (oldValuesAudit == null || oldValuesAudit.length == 0)
+        return "Nenhum valor antigo atribuído a essa ação.";
+
+    const jsonString = JSON.stringify(oldValuesAudit, null, 2);
+    const trimmedString = jsonString.slice(1, -1);
+    const formattedString = trimmedString.replace(/,/g, "\n");
+    const lines = formattedString
+        .split("\n")
+        .filter((line) => line.trim() !== "");
+
+    return lines.join("\n");
 });
 </script>
 <template>
@@ -111,6 +143,24 @@ const showEvent = computed(() => {
                                     variant="outlined"
                                     readonly
                                 ></v-text-field>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <v-textarea
+                                    v-model="newValues"
+                                    label="Novos Valores:"
+                                    variant="outlined"
+                                    readonly
+                                ></v-textarea>
+                            </v-col>
+                            <v-col>
+                                <v-textarea
+                                    v-model="oldValues"
+                                    label="Valores Antigos:"
+                                    variant="outlined"
+                                    readonly
+                                ></v-textarea>
                             </v-col>
                         </v-row>
                         <v-row>

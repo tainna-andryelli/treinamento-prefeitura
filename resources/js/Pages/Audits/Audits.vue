@@ -11,9 +11,6 @@ const props = defineProps({
     users: Object,
 });
 
-const toast = useToast();
-const search = ref("");
-
 const headers = [
     { title: "ID", align: "left", value: "id" },
     { title: "Usuário", value: "user_id" },
@@ -56,6 +53,19 @@ const getTableName = (auditableType) => {
     const tableName = parts[parts.length - 1];
     return tableName;
 };
+
+//Search
+const search = ref("");
+
+const filteredAudits = computed(() => {
+    if (!search.value) return props.audits;
+
+    const searchTerm = search.value;
+
+    return props.audits.filter(() => {
+        return "";
+    });
+});
 
 //pagination
 const itemsPerPage = ref(10);
