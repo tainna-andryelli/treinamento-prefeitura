@@ -129,7 +129,7 @@ const filteredProtocols = computed(() => {
             getDepartmentName(protocol.department_id)
                 .toLowerCase()
                 .includes(searchTerm) ||
-            showStatus(protocol.status).toLocaleLowerCase().includes(searchTerm)
+            showStatus(protocol.status).toLowerCase().includes(searchTerm)
         );
     });
 });
